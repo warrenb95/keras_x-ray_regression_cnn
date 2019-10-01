@@ -13,8 +13,12 @@ from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
 import itertools
 
-def main():
-    print('hello world')
+train_path = 'MURA-v1.1/train'
+valid_path = 'MURA-v1.1/valid'
 
-if __name__ == "__main__":
-    main()
+train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale')
+valid_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale')
+
+imgs, labels = next(train_batches)
+
+print(labels)
