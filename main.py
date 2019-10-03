@@ -3,7 +3,7 @@ import keras
 from keras import backend as K
 from keras.models import Sequential
 from keras.layers import Activation
-from keras.layers.core import Dense, Flatten
+from keras.layers.core import Dense, Flatten, Dropout
 from keras.optimizers import Adam
 from keras.metrics import categorical_crossentropy
 from keras.preprocessing.image import ImageDataGenerator
@@ -13,12 +13,41 @@ from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
 import itertools
 
-train_path = 'MURA-v1.1/train'
-valid_path = 'MURA-v1.1/valid'
+from helper_funcs import save_model
 
-train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale')
-valid_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale')
+train_path = 'dataset/train'
+valid_path = 'dataset/valid'
+
+train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='rgba', batch_size=10)
+valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='rgba', batch_size=5)
 
 imgs, labels = next(train_batches)
 
-print(labels)
+model = Sequential()
+
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(256, 256, 4)))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(Conv2D(32, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Flatten())
+model.add(Dense(2, activation='softmax'))
+
+model.compile(Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+model.fit_generator(train_batches, steps_per_epoch=1, validation_data=valid_batches, validation_steps=1, epochs=1, verbose=2)
+
+save_model(model)
