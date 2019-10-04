@@ -41,20 +41,22 @@ with open(training_file_name) as csv_file:
     row_count = 1
 
     for row in csv_reader:
-        if 'elbow' in row[0]:
+        if 'ELBOW' in row[0]:
             copy_files(row[0], train_elbow_folder)
-        elif 'finger' in row[0]:
+        elif 'FINGER' in row[0]:
             copy_files(row[0], train_finger_folder)
-        elif 'forearm' in row[0]:
+        elif 'FOREARM' in row[0]:
             copy_files(row[0], train_forearm_folder)
-        elif 'hand' in row[0]:
+        elif 'HAND' in row[0]:
             copy_files(row[0], train_hand_folder)
-        elif 'humerus' in row[0]:
+        elif 'HUMERUS' in row[0]:
             copy_files(row[0], train_humerus_folder)
-        elif 'shoulder' in row[0]:
+        elif 'SHOULDER' in row[0]:
             copy_files(row[0], train_shoulder_folder)
-        elif 'wrist' in row[0]:
+        elif 'WRIST' in row[0]:
             copy_files(row[0], train_wrist_folder)
+        else:
+            print("Oops")
 
         print('Training: ', row_count)
         row_count += 1
@@ -65,19 +67,19 @@ with open(valid_file_name) as csv_file:
     row_count = 1
 
     for row in csv_reader:
-        if 'elbow' in row[0]:
+        if 'ELBOW' in row[0]:
             copy_files(row[0], valid_elbow_folder)
-        elif 'finger' in row[0]:
+        elif 'FINGER' in row[0]:
             copy_files(row[0], valid_finger_folder)
-        elif 'forearm' in row[0]:
+        elif 'FOREARM' in row[0]:
             copy_files(row[0], valid_forearm_folder)
-        elif 'hand' in row[0]:
+        elif 'HAND' in row[0]:
             copy_files(row[0], valid_hand_folder)
-        elif 'humerus' in row[0]:
+        elif 'HUMERUS' in row[0]:
             copy_files(row[0], valid_humerus_folder)
-        elif 'shoulder' in row[0]:
+        elif 'SHOULDER' in row[0]:
             copy_files(row[0], valid_shoulder_folder)
-        elif 'wrist' in row[0]:
+        elif 'WRIST' in row[0]:
             copy_files(row[0], valid_wrist_folder)
 
         print('Valid: ', row_count)
