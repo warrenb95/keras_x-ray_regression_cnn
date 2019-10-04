@@ -18,10 +18,8 @@ from helper_funcs import save_model
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
 
-train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='rgba', batch_size=10)
-valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='rgba', batch_size=5)
-
-imgs, labels = next(train_batches)
+train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='rgba', batch_size=30)
+valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='rgba', batch_size=3)
 
 model = Sequential()
 
@@ -44,10 +42,10 @@ model.add(Conv2D(32, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Flatten())
-model.add(Dense(2, activation='softmax'))
+model.add(Dense(7, activation='softmax'))
 
 model.compile(Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
 
-model.fit_generator(train_batches, steps_per_epoch=1, validation_data=valid_batches, validation_steps=1, epochs=1, verbose=2)
+model.fit_generator(train_batches, steps_per_epoch=1227, validation_data=valid_batches, validation_steps=1065, epochs=100, verbose=2)
 
 save_model(model)
