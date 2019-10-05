@@ -41,11 +41,15 @@ model.add(Conv2D(32, (3, 3), activation='relu'))
 model.add(Conv2D(32, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
+model.add(Dense(256, activation='softmax'))
 model.add(Flatten())
 model.add(Dense(7, activation='softmax'))
 
 model.compile(Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
 
-model.fit_generator(train_batches, steps_per_epoch=1227, validation_data=valid_batches, validation_steps=106, epochs=5, verbose=2)
-
-save_model(model)
+try:
+    model.fit_generator(train_batches, steps_per_epoch=1227, validation_data=valid_batches, validation_steps=106, epochs=5, verbose=1)
+except KeyboardInterrupt:
+    save_model(model)
+else:
+    save_model(model)
