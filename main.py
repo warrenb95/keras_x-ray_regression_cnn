@@ -19,7 +19,7 @@ train_path = 'dataset/train'
 valid_path = 'dataset/valid'
 
 train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='rgba', batch_size=30)
-valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='rgba', batch_size=3)
+valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='rgba', batch_size=30)
 
 model = Sequential()
 
@@ -46,6 +46,6 @@ model.add(Dense(7, activation='softmax'))
 
 model.compile(Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
 
-model.fit_generator(train_batches, steps_per_epoch=1227, validation_data=valid_batches, validation_steps=1065, epochs=100, verbose=2)
+model.fit_generator(train_batches, steps_per_epoch=1227, validation_data=valid_batches, validation_steps=106, epochs=5, verbose=2)
 
 save_model(model)
