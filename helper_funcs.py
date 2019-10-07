@@ -10,28 +10,30 @@ from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.models import model_from_json
 
-def save_model(model):
+import typing
+
+def save_model(model: typing.Type[keras.Sequential], model_name: str):
     # serialize model to JSON
     model_json = model.to_json()
-    with open("model.json", "w") as json_file:
+    with open(model_name + ".json", "w") as json_file:
         json_file.write(model_json)
     # serialize weights to HDF5
-    model.save_weights("model.h5")
-    print("Saved model to disk")
+    model.save_weights(model_name + ".h5")
+    print("Saved %s to disk", model_name)
 
-def load_model():
+def load_model(model_name: str) -> keras.Sequential:
     # load json and create model
-    json_file = open('model.json', 'r')
+    json_file = open(model_name + '.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights("model.h5")
-    print("Loaded model from disk")
+    loaded_model.load_weights(model_name + ".h5")
+    print("Loaded %s from disk", model_name)
 
     return loaded_model
 
-def create_new_model():
+def create_new_model() -> keras.Sequential:
     model = Sequential()
 
     model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(256, 256, 4)))
