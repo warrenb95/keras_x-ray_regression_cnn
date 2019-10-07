@@ -8,6 +8,7 @@ from keras.optimizers import Adam
 from keras.metrics import categorical_crossentropy
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers.normalization import BatchNormalization
+from keras.layers.convolutional import Conv2D, MaxPooling2D
 from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
 import itertools
