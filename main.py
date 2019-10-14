@@ -16,10 +16,10 @@ import itertools
 
 import helper_funcs
 
-TESTING = True
-steps_per_epoch = 10
-validation_steps = 2
-epochs = 2
+TESTING = False
+steps_per_epoch = 250
+validation_steps = 25
+epochs = 10
 decay = 1e-1 / epochs
 
 train_path = 'dataset/train'
