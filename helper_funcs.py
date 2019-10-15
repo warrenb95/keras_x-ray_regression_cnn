@@ -63,3 +63,19 @@ def create_new_model() -> keras.Sequential:
     model.add(Dense(7, activation='softmax'))
 
     return model
+
+class PolynomialDecay():
+	def __init__(self, maxEpochs=100, initAlpha=0.01, power=1.0):
+		# store the maximum number of epochs, base learning rate,
+		# and power of the polynomial
+		self.maxEpochs = maxEpochs
+		self.initAlpha = initAlpha
+		self.power = power
+
+	def __call__(self, epoch):
+		# compute the new learning rate based on polynomial decay
+		decay = (1 - (epoch / float(self.maxEpochs))) ** self.power
+		alpha = self.initAlpha * decay
+
+		# return the new learning rate
+		return float(alpha)

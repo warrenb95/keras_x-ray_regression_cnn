@@ -9,11 +9,18 @@ from keras.metrics import categorical_crossentropy
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Conv2D, MaxPooling2D
+from keras.callbacks import LearningRateScheduler
 from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
 import itertools
 
 import helper_funcs
+
+TESTING = False
+steps_per_epoch = 250
+validation_steps = 25
+epochs = 10
+decay = 1e-1 / epochs
 
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
@@ -21,15 +28,36 @@ valid_path = 'dataset/valid'
 train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='rgba', batch_size=30)
 valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='rgba', batch_size=30)
 
-class_model = helper_funcs.create_new_model()
-# class_model = helper_funcs.load_model()
+callbacks = [LearningRateScheduler(helper_funcs.PolynomialDecay(maxEpochs = epochs, initAlpha=1e-1, power=5))]
+opt = Adam(learning_rate=1e-1)
 
-class_model.compile(Adam(learning_rate=0.0001), loss='categorical_crossentropy', metrics=['accuracy'])
+model = helper_funcs.create_new_model()
+# model = helper_funcs.load_model()
 
-try:
-    class_model.fit_generator(train_batches, steps_per_epoch=1227, validation_data=valid_batches, validation_steps=106, epochs=5, verbose=1)
-except KeyboardInterrupt:
-    helper_funcs.save_model(class_model, "class_model")
+model.compile(optimizer = opt, loss = 'categorical_crossentropy', metrics = ['accuracy'])
+
+if not TESTING:
+    print("----------------- TRAINING -----------------")
+    try:
+        model.fit_generator(train_batches,
+                            steps_per_epoch = steps_per_epoch,
+                            callbacks = callbacks,
+                            validation_data = valid_batches,
+                            validation_steps = validation_steps,
+                            epochs = epochs,
+                            verbose = 1,
+                            shuffle = True)
+    except KeyboardInterrupt:
+        helper_funcs.save_model(model)
+    else:
+        helper_funcs.save_model(model)
 else:
-    helper_funcs.save_model(class_model, "class_model")
-
+    print("----------------- TESTING -----------------")
+    model.fit_generator(train_batches,
+                        steps_per_epoch = steps_per_epoch,
+                        callbacks = callbacks,
+                        validation_data = valid_batches,
+                        validation_steps = validation_steps,
+                        epochs = epochs,
+                        verbose = 1,
+                        shuffle = True)
