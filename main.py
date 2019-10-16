@@ -16,17 +16,17 @@ import itertools
 
 import helper_funcs
 
-TESTING = False
-steps_per_epoch = 250
-validation_steps = 25
-epochs = 10
+TESTING = True
+steps_per_epoch = 25
+validation_steps = 5
+epochs = 5
 decay = 1e-1 / epochs
 
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
 
-train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='rgba', batch_size=30)
-valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='rgba', batch_size=30)
+train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale', batch_size=30, target_size=(224,244))
+valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='grayscale', batch_size=30, target_size=(224,244))
 
 callbacks = [LearningRateScheduler(helper_funcs.PolynomialDecay(maxEpochs = epochs, initAlpha=1e-1, power=5))]
 opt = Adam(learning_rate=1e-1)
@@ -48,9 +48,9 @@ if not TESTING:
                             verbose = 1,
                             shuffle = True)
     except KeyboardInterrupt:
-        helper_funcs.save_model(model)
+        helper_funcs.save_model(model, "class_model")
     else:
-        helper_funcs.save_model(model)
+        helper_funcs.save_model(model, "class_model")
 else:
     print("----------------- TESTING -----------------")
     model.fit_generator(train_batches,
