@@ -1,4 +1,5 @@
 import numpy as np
+
 import keras
 from keras import backend as K
 from keras.models import Sequential
@@ -10,10 +11,11 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.callbacks import LearningRateScheduler
-from matplotlib import pyplot as plt
+
 from sklearn.metrics import confusion_matrix
 import itertools
 import matplotlib.pyplot as plt
+
 from datetime import datetime
 
 import helper_funcs
