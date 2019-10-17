@@ -19,7 +19,7 @@ def save_model(model: typing.Type[keras.Sequential], model_name: str):
         json_file.write(model_json)
     # serialize weights to HDF5
     model.save_weights(model_name + ".h5")
-    print("Saved %s to disk", model_name)
+    print("Saved %s to disk" % model_name)
 
 def load_model(model_name: str) -> keras.Sequential:
     # load json and create model
@@ -29,7 +29,7 @@ def load_model(model_name: str) -> keras.Sequential:
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
     loaded_model.load_weights(model_name + ".h5")
-    print("Loaded %s from disk", model_name)
+    print("Loaded %s from disk" % model_name)
 
     return loaded_model
 
