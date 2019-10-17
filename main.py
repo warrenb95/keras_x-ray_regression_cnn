@@ -53,51 +53,35 @@ if not TESTING:
 
         curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        # Plot training & validation accuracy values
+        # Plot training & validation data
         plt.plot(history.history['accuracy'])
         plt.plot(history.history['val_accuracy'])
-        plt.title('Model accuracy')
-        plt.ylabel('Accuracy')
-        plt.xlabel('Epoch')
-        plt.legend(['accuracy', 'val_accuracy'], loc='upper left')
-
-        fname = "model_graphs/" + curr_datetime + "_accuracy_class_model.jpg"
-        plt.savefig(fname)
-
-        # Plot training & validation loss values
         plt.plot(history.history['loss'])
         plt.plot(history.history['val_loss'])
-        plt.title('Model loss')
-        plt.ylabel('Loss')
+        plt.title('training data')
+        plt.ylabel('Accuracy/Loss')
         plt.xlabel('Epoch')
-        plt.legend(['loss', 'val_loss'], loc='upper left')
+        plt.legend(['accuracy', 'val_accuracy', 'loss', 'val_loss'], loc='upper left')
 
-        fname = "model_graphs/" + curr_datetime + "_loss_class_model.jpg"
+        fname = "model_graphs/" + curr_datetime + "_class_model.jpg"
         plt.savefig(fname)
 
     except KeyboardInterrupt:
         helper_funcs.save_model(model, "class_model")
 
-        # Plot training & validation accuracy values
+        curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+        # Plot training & validation data
         plt.plot(history.history['accuracy'])
         plt.plot(history.history['val_accuracy'])
-        plt.title('Model accuracy')
-        plt.ylabel('Accuracy')
-        plt.xlabel('Epoch')
-        plt.legend(['accuracy', 'val_accuracy'], loc='upper left')
-
-        fname = "model_graphs/" + curr_datetime + "_accuracy_class_model.jpg"
-        plt.savefig(fname)
-
-        # Plot training & validation loss values
         plt.plot(history.history['loss'])
         plt.plot(history.history['val_loss'])
-        plt.title('Model loss')
-        plt.ylabel('Loss')
+        plt.title('training data')
+        plt.ylabel('Accuracy/Loss')
         plt.xlabel('Epoch')
-        plt.legend(['loss', 'val_loss'], loc='upper left')
+        plt.legend(['accuracy', 'val_accuracy', 'loss', 'val_loss'], loc='upper left')
 
-        fname = "model_graphs/" + curr_datetime + "_loss_class_model.jpg"
+        fname = "model_graphs/" + curr_datetime + "_class_model.jpg"
         plt.savefig(fname)
     else:
         helper_funcs.save_model(model, "class_model")

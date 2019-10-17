@@ -1,5 +1,7 @@
 /MURA-v1.1
 /dataset
-model.json
-model.h5
+*.json
+*.h5
+/model_graphs
 settings.py
+*.pyc
