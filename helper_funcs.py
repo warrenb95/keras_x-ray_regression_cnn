@@ -36,12 +36,17 @@ def load_model(model_name: str) -> keras.Sequential:
 def create_new_model() -> keras.Sequential:
     model = Sequential()
 
-    model.add(Conv2D(64, (3, 3), activation='relu', padding='same', input_shape=(224, 224, 1)))
+    model.add(Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(112, 112, 1)))
+    model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
     model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
     model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
@@ -49,24 +54,17 @@ def create_new_model() -> keras.Sequential:
     model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Flatten())
     model.add(Dropout(0.2))
-    model.add(Dense(4096, activation='relu'))
-    model.add(Dense(4096, activation='relu'))
-    model.add(Dense(1000, activation='softmax'))
-    model.add(Dense(300, activation='softmax'))
-    model.add(Dense(100, activation='softmax'))
-    model.add(Dense(7, activation='sigmoid'))
+    model.add(Dense(2048, activation='relu'))
+    model.add(Dense(2048, activation='relu'))
+    model.add(Dense(500, activation='softmax'))
+    model.add(Dense(7, activation='softmax'))
 
     return model
 

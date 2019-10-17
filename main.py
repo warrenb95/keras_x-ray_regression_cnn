@@ -30,8 +30,8 @@ decay = settings.decay
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
 
-train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale', batch_size=30, target_size=(224,224))
-valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='grayscale', batch_size=30, target_size=(224,224))
+train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale', batch_size=1, target_size=(112,112))
+valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='grayscale', batch_size=1, target_size=(112,112))
 
 callbacks = [LearningRateScheduler(helper_funcs.PolynomialDecay(maxEpochs = epochs, initAlpha=1e-1, power=5))]
 opt = Adam(learning_rate=1e-1)
@@ -50,7 +50,7 @@ if not TESTING:
                             validation_data = valid_batches,
                             validation_steps = validation_steps,
                             epochs = epochs,
-                            verbose = 1,
+                            verbose = 2,
                             shuffle = True)
 
         curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -70,21 +70,6 @@ if not TESTING:
 
     except KeyboardInterrupt:
         helper_funcs.save_model(model, "class_model")
-
-        curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-        # Plot training & validation data
-        plt.plot(history.history['accuracy'])
-        plt.plot(history.history['val_accuracy'])
-        plt.plot(history.history['loss'])
-        plt.plot(history.history['val_loss'])
-        plt.title('training data')
-        plt.ylabel('Accuracy/Loss')
-        plt.xlabel('Epoch')
-        plt.legend(['accuracy', 'val_accuracy', 'loss', 'val_loss'], loc='upper left')
-
-        fname = "model_graphs/" + curr_datetime + "_class_model.jpg"
-        plt.savefig(fname)
     else:
         helper_funcs.save_model(model, "class_model")
 else:
@@ -95,6 +80,6 @@ else:
                         validation_data = valid_batches,
                         validation_steps = validation_steps,
                         epochs = epochs,
-                        verbose = 1,
+                        verbose = 2,
                         shuffle = True)
 
