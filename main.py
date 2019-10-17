@@ -17,12 +17,13 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 
 import helper_funcs
+import settings
 
-TESTING = True
-steps_per_epoch = 1
-validation_steps = 1
-epochs = 1
-decay = 1e-1 / epochs
+TESTING = settings.TESTING
+steps_per_epoch = settings.steps_per_epoch
+validation_steps = settings.validation_steps
+epochs = settings.epochs
+decay = settings.decay
 
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
