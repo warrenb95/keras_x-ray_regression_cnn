@@ -13,13 +13,15 @@ from keras.callbacks import LearningRateScheduler
 from matplotlib import pyplot as plt
 from sklearn.metrics import confusion_matrix
 import itertools
+import matplotlib.pyplot as plt
+from datetime import datetime
 
 import helper_funcs
 
 TESTING = True
-steps_per_epoch = 25
-validation_steps = 5
-epochs = 5
+steps_per_epoch = 1
+validation_steps = 1
+epochs = 1
 decay = 1e-1 / epochs
 
 train_path = 'dataset/train'
@@ -39,7 +41,7 @@ model.compile(optimizer = opt, loss = 'categorical_crossentropy', metrics = ['ac
 if not TESTING:
     print("----------------- TRAINING -----------------")
     try:
-        model.fit_generator(train_batches,
+        history = model.fit_generator(train_batches,
                             steps_per_epoch = steps_per_epoch,
                             callbacks = callbacks,
                             validation_data = valid_batches,
@@ -47,13 +49,60 @@ if not TESTING:
                             epochs = epochs,
                             verbose = 1,
                             shuffle = True)
+
+        curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+        # Plot training & validation accuracy values
+        plt.plot(history.history['accuracy'])
+        plt.plot(history.history['val_accuracy'])
+        plt.title('Model accuracy')
+        plt.ylabel('Accuracy')
+        plt.xlabel('Epoch')
+        plt.legend(['accuracy', 'val_accuracy'], loc='upper left')
+
+        fname = "model_graphs/" + curr_datetime + "_accuracy_class_model.jpg"
+        plt.savefig(fname)
+
+        # Plot training & validation loss values
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.title('Model loss')
+        plt.ylabel('Loss')
+        plt.xlabel('Epoch')
+        plt.legend(['loss', 'val_loss'], loc='upper left')
+
+        fname = "model_graphs/" + curr_datetime + "_loss_class_model.jpg"
+        plt.savefig(fname)
+
     except KeyboardInterrupt:
         helper_funcs.save_model(model, "class_model")
+
+        # Plot training & validation accuracy values
+        plt.plot(history.history['accuracy'])
+        plt.plot(history.history['val_accuracy'])
+        plt.title('Model accuracy')
+        plt.ylabel('Accuracy')
+        plt.xlabel('Epoch')
+        plt.legend(['accuracy', 'val_accuracy'], loc='upper left')
+
+        fname = "model_graphs/" + curr_datetime + "_accuracy_class_model.jpg"
+        plt.savefig(fname)
+
+        # Plot training & validation loss values
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.title('Model loss')
+        plt.ylabel('Loss')
+        plt.xlabel('Epoch')
+        plt.legend(['loss', 'val_loss'], loc='upper left')
+
+        fname = "model_graphs/" + curr_datetime + "_loss_class_model.jpg"
+        plt.savefig(fname)
     else:
         helper_funcs.save_model(model, "class_model")
 else:
     print("----------------- TESTING -----------------")
-    model.fit_generator(train_batches,
+    history = model.fit_generator(train_batches,
                         steps_per_epoch = steps_per_epoch,
                         callbacks = callbacks,
                         validation_data = valid_batches,
@@ -61,3 +110,4 @@ else:
                         epochs = epochs,
                         verbose = 1,
                         shuffle = True)
+
