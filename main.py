@@ -30,8 +30,8 @@ decay = settings.decay
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
 
-train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale', batch_size=1, target_size=(112,112))
-valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='grayscale', batch_size=1, target_size=(112,112))
+train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale', batch_size=30, target_size=(112,112))
+valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='grayscale', batch_size=30, target_size=(112,112))
 
 callbacks = [LearningRateScheduler(helper_funcs.PolynomialDecay(maxEpochs = epochs, initAlpha=1e-1, power=5))]
 opt = Adam(learning_rate=1e-1)
@@ -50,7 +50,7 @@ if not TESTING:
                             validation_data = valid_batches,
                             validation_steps = validation_steps,
                             epochs = epochs,
-                            verbose = 2,
+                            verbose = 1,
                             shuffle = True)
 
         curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -80,6 +80,6 @@ else:
                         validation_data = valid_batches,
                         validation_steps = validation_steps,
                         epochs = epochs,
-                        verbose = 2,
+                        verbose = 1,
                         shuffle = True)
 

@@ -1,5 +1,5 @@
-TESTING = True
-steps_per_epoch = 1
-validation_steps = 1
-epochs = 1
+TESTING = False
+steps_per_epoch = 250
+validation_steps = 25
+epochs = 100
 decay = 1e-1 / epochs
