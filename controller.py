@@ -7,6 +7,7 @@ class Controller():
         print("init controller")
         self.root = tk.Tk()
         self.root.geometry("1200x720")
+        self.root.resizable(0, 0)
         self.model = Model()
         self.view = View(self.root)
 
