@@ -33,11 +33,11 @@ valid_path = 'dataset/valid'
 train_batches = ImageDataGenerator().flow_from_directory(train_path, color_mode='grayscale', batch_size=30, target_size=(112,112))
 valid_batches = ImageDataGenerator().flow_from_directory(valid_path, color_mode='grayscale', batch_size=30, target_size=(112,112))
 
-callbacks = [LearningRateScheduler(helper_funcs.PolynomialDecay(maxEpochs = epochs, initAlpha=1e-1, power=5))]
+callbacks = [LearningRateScheduler(helper_funcs.PolynomialDecay(maxEpochs = epochs, initAlpha=1e-1, power=1))]
 opt = Adam(learning_rate=1e-1)
 
 model = helper_funcs.create_new_model()
-# model = helper_funcs.load_model()
+# model = helper_funcs.load_model("class_model")
 
 model.compile(optimizer = opt, loss = 'categorical_crossentropy', metrics = ['accuracy'])
 
