@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras.layers import Activation
 from keras.layers.core import Dense, Flatten, Dropout
 from keras.optimizers import Adam
-from keras.metrics import mean_absolute_percentage_error
+from keras.metrics import mean_squared_error
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Conv2D, MaxPooling2D
@@ -59,20 +59,18 @@ valid_batches = ImageDataGenerator().flow_from_dataframe(
     class_mode='raw'
 )
 
-callbacks = [LearningRateScheduler(helper_funcs.PolynomialDecay(maxEpochs = epochs, initAlpha=1e-1, power=1))]
-opt = Adam(learning_rate=1e-1)
+opt = Adam(learning_rate=1e-3, decay=decay)
 
 model = helper_funcs.create_new_model()
 # model = helper_funcs.load_model(body_part)
 
-model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
+model.compile(optimizer = opt, loss = 'mean_squared_error')
 
 if not TESTING:
     print("----------------- TRAINING -----------------")
     try:
         history = model.fit_generator(train_batches,
                             steps_per_epoch = steps_per_epoch,
-                            callbacks = callbacks,
                             validation_data = valid_batches,
                             validation_steps = validation_steps,
                             epochs = epochs,
@@ -82,14 +80,12 @@ if not TESTING:
         curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
         # Plot training & validation data
-        plt.plot(history.history['accuracy'])
-        plt.plot(history.history['val_accuracy'])
         plt.plot(history.history['loss'])
         plt.plot(history.history['val_loss'])
         plt.title('training data')
-        plt.ylabel('Accuracy/Loss')
+        plt.ylabel('Loss')
         plt.xlabel('Epoch')
-        plt.legend(['accuracy', 'val_accuracy', 'loss', 'val_loss'], loc='upper left')
+        plt.legend(['loss', 'val_loss'], loc='upper left')
 
         fname = "model_graphs/" + curr_datetime + '_' + body_part + '.jpg'
         plt.savefig(fname)
@@ -102,7 +98,6 @@ else:
     print("----------------- TESTING -----------------")
     history = model.fit_generator(train_batches,
                         steps_per_epoch = steps_per_epoch,
-                        callbacks = callbacks,
                         validation_data = valid_batches,
                         validation_steps = validation_steps,
                         epochs = epochs,
