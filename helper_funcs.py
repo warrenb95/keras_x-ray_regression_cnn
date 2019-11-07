@@ -12,7 +12,9 @@ from keras.models import model_from_json
 
 import typing
 import pandas as pd
-import numpy as np
+import cv2
+
+
 
 def save_model(model: typing.Type[keras.Sequential], model_name: str):
     # serialize model to JSON
@@ -38,7 +40,7 @@ def load_model(model_name: str) -> keras.Sequential:
 def create_new_model() -> keras.Sequential:
     model = Sequential()
 
-    model.add(Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(112, 112, 1)))
+    model.add(Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(112, 112, 3)))
     model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
@@ -86,3 +88,18 @@ class PolynomialDecay():
 
 		# return the new learning rate
 		return float(alpha)
+
+def load_dataset_attributes(input_path: str) -> pd.DataFrame:
+    return pd.read_csv(input_path, sep=',', header=None, names=['path', 'target'])
+
+def load_images(df: pd.DataFrame):
+
+    images = []
+
+    for path in df['path']:
+        cur_image = cv2.imread(path)
+        cur_image = cv2.resize(cur_image, (112, 112))
+
+        images.append(cur_image)
+
+    return images
