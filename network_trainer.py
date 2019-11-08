@@ -41,7 +41,7 @@ split = train_test_split(df, images, test_size=0.25, random_state=2, shuffle=Tru
 train_y = train_attribs_x['target']
 test_y = test_attribs_x['target']
 
-opt = Adam(learning_rate=1e-3, decay=decay)
+opt = Adam(learning_rate=1e-1, decay=decay)
 
 model = helper_funcs.create_new_model()
 # model = helper_funcs.load_model(body_part)
@@ -83,6 +83,5 @@ else:
                             np.array(train_y),
                             validation_data=(np.array(test_images_x), np.array(test_y)),
                             epochs=epochs,
-                            batch_size=batch_size,
                             verbose=1,
                             shuffle=True)
