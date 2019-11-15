@@ -1,10 +1,11 @@
 from controller import Controller
+from trainer import Trainer
 
 if __name__ == "__main__":
 
     print(
         "1. Launch the GUI application.\n"
-        "2. Train Classificatioin network"
+        "2. Train network"
     )
 
     usr_in = input("Please select: ")
@@ -13,5 +14,7 @@ if __name__ == "__main__":
         controller = Controller()
         controller.run()
     elif int(usr_in) == 2:
-        # Todo
-        pass
+        trainer = Trainer()
+
+        trainer.load_data()
+        trainer.train()
