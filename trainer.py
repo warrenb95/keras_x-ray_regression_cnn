@@ -53,13 +53,33 @@ class Trainer:
         self.train_y = self.train_attribs_x['target']
         self.test_y = self.test_attribs_x['target']
 
-    def train(self):
+    def train_new_classification(self):
+        self.model = helper_funcs.create_new_model(False, 7)
+
+        self.train()
+
+    def train_classification(self):
+        self.model = helper_funcs.load_model(self.body_part)
+
+        self.train()
+
+    def train_new_regression(self):
+        self.model = helper_funcs.create_new_model(True, 0)
+
         opt = Adam(learning_rate=1e-1, decay=self.decay)
-
-        self.model = helper_funcs.create_new_model()
-        # model = helper_funcs.load_model(body_part)
-
         self.model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
+
+        self.train()
+
+    def train_regression(self):
+        self.model = helper_funcs.load_model(self.body_part)
+
+        opt = Adam(learning_rate=1e-1, decay=self.decay)
+        self.model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
+
+        self.train()
+
+    def train(self):
 
         if not self.TESTING:
 

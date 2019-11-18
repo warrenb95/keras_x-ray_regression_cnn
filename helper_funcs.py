@@ -37,39 +37,42 @@ def load_model(model_name: str) -> keras.Sequential:
 
     return loaded_model
 
-def create_new_model() -> keras.Sequential:
+def create_new_model(regression: bool, class_num: int) -> keras.Sequential:
     model = Sequential()
 
-    model.add(Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(112, 112, 3)))
-    model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(224, (3, 3), activation='relu', padding='same', input_shape=(224, 224, 3)))
+    model.add(Conv2D(224, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-    model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(112, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(112, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-    model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(56, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(56, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(56, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(28, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(28, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(28, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(28, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(28, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(28, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Flatten())
     model.add(Dropout(0.2))
-    model.add(Dense(2048, activation='relu'))
-    model.add(Dense(1024, activation='relu'))
-    model.add(Dense(200, activation='softmax'))
+    model.add(Dense(84, activation='relu'))
+    model.add(Dense(42, activation='relu'))
+    model.add(Dense(21, activation='relu'))
 
-    model.add(Dense(1, activation='linear'))
+    if regression:
+        model.add(Dense(1, activation='linear'))
+    else:
+        model.add(Dense(class_num, activation='softmax'))
 
     return model
 
@@ -98,7 +101,7 @@ def load_images(df: pd.DataFrame):
 
     for path in df['path']:
         cur_image = cv2.imread(path)
-        cur_image = cv2.resize(cur_image, (112, 112))
+        cur_image = cv2.resize(cur_image, ( 224, 224))
 
         images.append(cur_image)
 
