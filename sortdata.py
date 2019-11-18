@@ -48,6 +48,9 @@ def add_to_dataset_file(path: str, value: int, model_type: str):
 training_file_name = 'MURA-v1.1/train_labeled_studies.csv'
 valid_file_name = 'MURA-v1.1/valid_labeled_studies.csv'
 
+'''
+This is to be used to sort the data for the regression models.
+'''
 with open(training_file_name) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
 
@@ -153,3 +156,5 @@ with open(valid_file_name) as csv_file:
 
         print('Valid: ', row_count)
         row_count += 1
+
+------------------------------------------------------------------------------------------------

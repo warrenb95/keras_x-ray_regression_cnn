@@ -23,6 +23,7 @@ class Trainer:
 
     def __init__(self):
         self.TESTING = settings.TESTING
+        self.data_gen_batch_size = settings.data_gen_batch_size
         self.batch_size = settings.batch_size
         self.epochs = settings.epochs
         self.decay = settings.decay
@@ -34,7 +35,7 @@ class Trainer:
         self.train_dataset_file = 'dataset/' + 'train_' + self.body_part + '.csv'
         self.valid_dataset_file = 'dataset/' + 'valid_' + self.body_part + '.csv'
 
-    def load_data(self):
+    def load_regression_data(self):
         df = helper_funcs.load_dataset_attributes(self.train_dataset_file)
 
         images = helper_funcs.load_images(df)
@@ -53,15 +54,26 @@ class Trainer:
         self.train_y = self.train_attribs_x['target']
         self.test_y = self.test_attribs_x['target']
 
+    def load_classification_data(self):
+        self.classification_train_generator = ImageDataGenerator().flow_from_directory('dataset/train',
+                                                                                    target_size = (224, 224),
+                                                                                    batch_size = self.data_gen_batch_size)
+
+        self.classification_valid_generator = ImageDataGenerator().flow_from_directory('dataset/valid',
+                                                                                    target_size = (224, 224),
+                                                                                    batch_size = self.data_gen_batch_size)
+
     def train_new_classification(self):
         self.model = helper_funcs.create_new_model(False, 7)
+        self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-        self.train()
+        self.train_classification_model()
 
     def train_classification(self):
         self.model = helper_funcs.load_model(self.body_part)
+        self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-        self.train()
+        self.train_classification_model()
 
     def train_new_regression(self):
         self.model = helper_funcs.create_new_model(True, 0)
@@ -69,7 +81,7 @@ class Trainer:
         opt = Adam(learning_rate=1e-1, decay=self.decay)
         self.model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
 
-        self.train()
+        self.train_regression_model()
 
     def train_regression(self):
         self.model = helper_funcs.load_model(self.body_part)
@@ -77,9 +89,9 @@ class Trainer:
         opt = Adam(learning_rate=1e-1, decay=self.decay)
         self.model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
 
-        self.train()
+        self.train_regression_model()
 
-    def train(self):
+    def train_regression_model(self):
 
         if not self.TESTING:
 
@@ -119,3 +131,52 @@ class Trainer:
                                     batch_size=self.batch_size,
                                     verbose=1,
                                     shuffle=True)
+
+
+    def train_classification_model(self):
+
+        if not self.TESTING:
+
+            try:
+                print("----------------- TRAINING -----------------")
+                history = self.model.fit_generator(self.classification_train_generator,
+                                    validation_data=self.classification_valid_generator,
+                                    epochs=self.epochs,
+                                    verbose=1,
+                                    shuffle=True)
+
+                curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+                # Plot training & validation data
+                plt.plot(history.history['loss'])
+                plt.plot(history.history['val_loss'])
+                plt.title('training data')
+                plt.ylabel('Loss')
+                plt.xlabel('Epoch')
+                plt.legend(['loss', 'val_loss'], loc='upper left')
+
+                fname = "model_graphs/" + curr_datetime + '_' + self.body_part + '.jpg'
+                plt.savefig(fname)
+
+            except KeyboardInterrupt:
+                helper_funcs.save_model(self.model, self.body_part)
+            else:
+                helper_funcs.save_model(self.model, self.body_part)
+        else:
+            print("----------------- TESTING -----------------")
+            self.model.fit_generator(self.classification_train_generator,
+                                    validation_data=self.classification_valid_generator,
+                                    epochs=self.epochs,
+                                    verbose=1,
+                                    shuffle=True)
+
+    def predict_abnormality(self):
+        predictions = self.model.predict(self.test_images_x)
+
+        diff = predictions.flatten() - self.test_y
+        percentage_diff = (diff/ self.test_y) * 100
+        abs_percentage = np.abs(percentage_diff)
+
+        mean = np.mean(abs_percentage)
+
+        print("Mean diff: {2f}%".format(mean))

@@ -16,5 +16,6 @@ if __name__ == "__main__":
     elif int(usr_in) == 2:
         trainer = Trainer()
 
-        trainer.load_data()
-        trainer.train()
+        trainer.load_regression_data()
+        trainer.train_new_regression()
+        trainer.predict_abnormality()
