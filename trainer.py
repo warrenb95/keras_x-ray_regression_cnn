@@ -26,7 +26,6 @@ class Trainer:
         self.data_gen_batch_size = settings.data_gen_batch_size
         self.batch_size = settings.batch_size
         self.epochs = settings.epochs
-        self.decay = settings.decay
         self.body_part = settings.body_part
 
         self.train_path = 'dataset/train'
@@ -37,6 +36,11 @@ class Trainer:
 
     def load_regression_data(self):
         df = helper_funcs.load_dataset_attributes(self.train_dataset_file)
+
+        # Cut down to 1000 otherwise GPU memory leak
+        if (len(df) > 1000):
+            print("Cutting df to 1000")
+            df = df[:999]
 
         images = helper_funcs.load_images(df)
 
@@ -171,12 +175,29 @@ class Trainer:
                                     shuffle=True)
 
     def predict_abnormality(self):
-        predictions = self.model.predict(self.test_images_x)
 
-        diff = predictions.flatten() - self.test_y
-        percentage_diff = (diff/ self.test_y) * 100
-        abs_percentage = np.abs(percentage_diff)
+        df = helper_funcs.load_dataset_attributes(self.valid_dataset_file)
 
-        mean = np.mean(abs_percentage)
+        # Cut down to 10 otherwise GPU memory leak
+        if (len(df) > 10):
+            print("Cutting df to 10")
+            df = df[:9]
 
-        print("Mean diff: {2f}%".format(mean))
+        images = helper_funcs.load_images(df)
+
+        valid_attribs_x = df
+        valid_images_x = images
+
+        valid_y = valid_attribs_x['target']
+
+        # np.expand_dims(image, axis=0))
+
+        predict_y = self.model.predict(np.array(valid_images_x))
+
+        # diff = predict_y.flatten() - test_y
+        # percentage_diff = (diff/ test_y) * 100
+        # abs_percentage = np.abs(percentage_diff)
+        # mean = np.mean(abs_percentage)
+
+        for i in range(len(predict_y)):
+            print("Actual: {}, Prediction: {}".format(valid_y[i], predict_y[i]))
