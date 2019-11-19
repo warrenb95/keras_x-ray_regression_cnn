@@ -60,43 +60,43 @@ with open(training_file_name) as csv_file:
         if 'ELBOW' in row[0]:
             # copy_files(row[0], train_elbow_folder)
             if row[1] == '1':
-                copy_files(row[0], train_elbow_folder, 1, 'train_elbow')
+                copy_files(row[0], train_elbow_folder, 100, 'train_elbow')
             else:
                 copy_files(row[0], train_elbow_folder, 0, 'train_elbow')
         elif 'FINGER' in row[0]:
             # copy_files(row[0], train_finger_folder)
             if row[1] == '1':
-                copy_files(row[0], train_finger_folder, 1, 'train_finger')
+                copy_files(row[0], train_finger_folder, 100, 'train_finger')
             else:
                 copy_files(row[0], train_finger_folder, 0, 'train_finger')
         elif 'FOREARM' in row[0]:
             # copy_files(row[0], train_forearm_folder)
             if row[1] == '1':
-                copy_files(row[0], train_forearm_folder, 1, 'train_forearm')
+                copy_files(row[0], train_forearm_folder, 100, 'train_forearm')
             else:
                 copy_files(row[0], train_forearm_folder, 0, 'train_forearm')
         elif 'HAND' in row[0]:
             # copy_files(row[0], train_hand_folder)
             if row[1] == '1':
-                copy_files(row[0], train_hand_folder, 1, 'train_hand')
+                copy_files(row[0], train_hand_folder, 100, 'train_hand')
             else:
                 copy_files(row[0], train_hand_folder, 0, 'train_hand')
         elif 'HUMERUS' in row[0]:
             # copy_files(row[0], train_humerus_folder)
             if row[1] == '1':
-                copy_files(row[0], train_humerus_folder, 1, 'train_humerus')
+                copy_files(row[0], train_humerus_folder, 100, 'train_humerus')
             else:
                 copy_files(row[0], train_humerus_folder, 0, 'train_humerus')
         elif 'SHOULDER' in row[0]:
             # copy_files(row[0], train_shoulder_folder)
             if row[1] == '1':
-                copy_files(row[0], train_shoulder_folder, 1, 'train_shoulder')
+                copy_files(row[0], train_shoulder_folder, 100, 'train_shoulder')
             else:
                 copy_files(row[0], train_shoulder_folder, 0, 'train_shoulder')
         elif 'WRIST' in row[0]:
             # copy_files(row[0], train_wrist_folder)
             if row[1] == '1':
-                copy_files(row[0], train_wrist_folder, 1, 'train_wrist')
+                copy_files(row[0], train_wrist_folder, 100, 'train_wrist')
             else:
                 copy_files(row[0], train_wrist_folder, 0, 'train_wrist')
         else:
@@ -114,43 +114,43 @@ with open(valid_file_name) as csv_file:
         if 'ELBOW' in row[0]:
             # copy_files(row[0], valid_elbow_folder)
             if row[1] == '1':
-                copy_files(row[0], valid_elbow_folder, 1, 'valid_elbow')
+                copy_files(row[0], valid_elbow_folder, 100, 'valid_elbow')
             else:
                 copy_files(row[0], valid_elbow_folder, 0, 'valid_elbow')
         elif 'FINGER' in row[0]:
             # copy_files(row[0], valid_finger_folder)
             if row[1] == '1':
-                copy_files(row[0], valid_finger_folder, 1, 'valid_finger')
+                copy_files(row[0], valid_finger_folder, 100, 'valid_finger')
             else:
                 copy_files(row[0], valid_finger_folder, 0, 'valid_finger')
         elif 'FOREARM' in row[0]:
             # copy_files(row[0], valid_forearm_folder)
             if row[1] == '1':
-                copy_files(row[0], valid_forearm_folder, 1, 'valid_forearm')
+                copy_files(row[0], valid_forearm_folder, 100, 'valid_forearm')
             else:
                 copy_files(row[0], valid_forearm_folder, 0, 'valid_forearm')
         elif 'HAND' in row[0]:
             # copy_files(row[0], valid_hand_folder)
             if row[1] == '1':
-                copy_files(row[0], valid_hand_folder, 1, 'valid_hand')
+                copy_files(row[0], valid_hand_folder, 100, 'valid_hand')
             else:
                 copy_files(row[0], valid_hand_folder, 0, 'valid_hand')
         elif 'HUMERUS' in row[0]:
             # copy_files(row[0], valid_humerus_folder)
             if row[1] == '1':
-                copy_files(row[0], valid_humerus_folder, 1, 'valid_humerus')
+                copy_files(row[0], valid_humerus_folder, 100, 'valid_humerus')
             else:
                 copy_files(row[0], valid_humerus_folder, 0, 'valid_humerus')
         elif 'SHOULDER' in row[0]:
             # copy_files(row[0], valid_shoulder_folder)
             if row[1] == '1':
-                copy_files(row[0], valid_shoulder_folder, 1, 'valid_shoulder')
+                copy_files(row[0], valid_shoulder_folder, 100, 'valid_shoulder')
             else:
                 copy_files(row[0], valid_shoulder_folder, 0, 'valid_shoulder')
         elif 'WRIST' in row[0]:
             # copy_files(row[0], valid_wrist_folder)
             if row[1] == '1':
-                copy_files(row[0], valid_wrist_folder, 1, 'valid_wrist')
+                copy_files(row[0], valid_wrist_folder, 100, 'valid_wrist')
             else:
                 copy_files(row[0], valid_wrist_folder, 0, 'valid_wrist')
 

@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras.layers import Activation
 from keras.layers.core import Dense, Flatten, Dropout
 from keras.optimizers import Adam
-from keras.metrics import mean_absolute_percentage_error
+from keras.metrics import mean_absolute_percentage_error, categorical_crossentropy
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Conv2D, MaxPooling2D
@@ -78,7 +78,7 @@ class Trainer:
     def train_new_regression(self):
         self.model = helper_funcs.create_new_model(True, 0)
 
-        opt = Adam(learning_rate=1e-1, decay=self.decay)
+        opt = Adam(learning_rate=1e-1)
         self.model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
 
         self.train_regression_model()
@@ -86,7 +86,7 @@ class Trainer:
     def train_regression(self):
         self.model = helper_funcs.load_model(self.body_part)
 
-        opt = Adam(learning_rate=1e-1, decay=self.decay)
+        opt = Adam(learning_rate=1e-1)
         self.model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
 
         self.train_regression_model()
