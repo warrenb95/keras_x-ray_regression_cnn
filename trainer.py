@@ -68,26 +68,28 @@ class Trainer:
         return (regression_train_generator, regression_test_generator)
 
 
-    # def load_classification_data(self):
-    #     classification_train_generator = ImageDataGenerator().flow_from_directory('dataset/train',
-    #                                                                                 target_size = (224, 224),
-    #                                                                                 batch_size = self.data_gen_batch_size)
+    def load_classification_data(self):
+        classification_train_generator = ImageDataGenerator().flow_from_directory('dataset/train',
+                                                                                    target_size = (224, 224),
+                                                                                    batch_size = self.data_gen_batch_size)
 
-    #     classification_valid_generator = ImageDataGenerator().flow_from_directory('dataset/valid',
-    #                                                                                 target_size = (224, 224),
-    #                                                                                 batch_size = self.data_gen_batch_size)
+        classification_valid_generator = ImageDataGenerator().flow_from_directory('dataset/valid',
+                                                                                    target_size = (224, 224),
+                                                                                    batch_size = self.data_gen_batch_size)
 
-    # def train_new_classification(self):
-    #     self.model = helper_funcs.create_new_model(False, 7)
-    #     self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+        return (classification_train_generator, classification_valid_generator)
 
-    #     self.train_classification_model()
+    def train_new_classification(self, classification_train_generator, classification_valid_generator):
+        model = helper_funcs.create_new_model(False, 7)
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-    # def train_classification(self):
-    #     self.model = helper_funcs.load_model(self.body_part)
-    #     self.model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+        return self.train_classification_model(model, classification_train_generator, classification_valid_generator)
 
-    #     self.train_classification_model()
+    def train_classification(self, classification_train_generator, classification_valid_generator):
+        model = helper_funcs.load_model(self.body_part)
+        model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+
+        return self.train_classification_model(model, classification_train_generator, classification_valid_generator)
 
     def train_new_regression(self, regression_train_generator, regression_test_generator):
         model = helper_funcs.create_new_model(True, 0)
@@ -103,7 +105,7 @@ class Trainer:
         opt = Adam(learning_rate=1e-1)
         model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
 
-        train_regression_model(model, regression_train_generator, regression_test_generator)
+        return self.train_regression_model(model, regression_train_generator, regression_test_generator)
 
     def train_regression_model(self, model, regression_train_generator, regression_test_generator):
 
@@ -150,42 +152,44 @@ class Trainer:
         return model
 
 
-    # def train_classification_model(self):
+    def train_classification_model(self, model, classification_train_generator, classification_valid_generator):
 
-    #     if not self.TESTING:
+        if not self.TESTING:
 
-    #         try:
-    #             print("----------------- TRAINING -----------------")
-    #             history = self.model.fit_generator(self.classification_train_generator,
-    #                                 validation_data=self.classification_valid_generator,
-    #                                 epochs=self.epochs,
-    #                                 verbose=1,
-    #                                 shuffle=True)
+            try:
+                print("----------------- TRAINING -----------------")
+                history = model.fit_generator(classification_train_generator,
+                                    validation_data=classification_valid_generator,
+                                    epochs=self.epochs,
+                                    verbose=1,
+                                    shuffle=True)
 
-    #             curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+                curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-    #             # Plot training & validation data
-    #             plt.plot(history.history['loss'])
-    #             plt.plot(history.history['val_loss'])
-    #             plt.title('training data')
-    #             plt.ylabel('Loss')
-    #             plt.xlabel('Epoch')
-    #             plt.legend(['loss', 'val_loss'], loc='upper left')
+                # Plot training & validation data
+                plt.plot(history.history['loss'])
+                plt.plot(history.history['val_loss'])
+                plt.title('training data')
+                plt.ylabel('Loss')
+                plt.xlabel('Epoch')
+                plt.legend(['loss', 'val_loss'], loc='upper left')
 
-    #             fname = "model_graphs/" + curr_datetime + '_' + self.body_part + '.jpg'
-    #             plt.savefig(fname)
+                fname = "model_graphs/" + curr_datetime + '_' + self.body_part + '.jpg'
+                plt.savefig(fname)
 
-    #         except KeyboardInterrupt:
-    #             helper_funcs.save_model(self.model, self.body_part)
-    #         else:
-    #             helper_funcs.save_model(self.model, self.body_part)
-    #     else:
-    #         print("----------------- TESTING -----------------")
-    #         self.model.fit_generator(self.classification_train_generator,
-    #                                 validation_data=self.classification_valid_generator,
-    #                                 epochs=self.epochs,
-    #                                 verbose=1,
-    #                                 shuffle=True)
+            except KeyboardInterrupt:
+                helper_funcs.save_model(model, self.body_part)
+            else:
+                helper_funcs.save_model(model, self.body_part)
+        else:
+            print("----------------- TESTING -----------------")
+            model.fit_generator(classification_train_generator,
+                                    validation_data=classification_valid_generator,
+                                    epochs=self.epochs,
+                                    verbose=1,
+                                    shuffle=True)
+
+        return model
 
     def predict_abnormality(self, model):
 
