@@ -16,6 +16,6 @@ if __name__ == "__main__":
     elif int(usr_in) == 2:
         trainer = Trainer()
 
-        trainer.load_regression_data()
-        trainer.train_new_regression()
-        trainer.predict_abnormality()
+        regression_train_generator, regression_test_generator = trainer.load_regression_data()
+        model = trainer.train_new_regression(regression_train_generator, regression_test_generator)
+        trainer.predict_abnormality(model)
