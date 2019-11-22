@@ -8,6 +8,7 @@ TESTING = settings.TESTING
 batch_size = settings.batch_size
 epochs = settings.epochs
 body_part = settings.body_part
+opt = settings.opt
 
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
@@ -17,13 +18,13 @@ classification_test_total = 3197
 
 def train_new():
     model = helper_funcs.create_new_model(False, 7)
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     train_classification_model(model)
 
 def train_old():
     model = helper_funcs.load_model(body_part)
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     train_classification_model(model)
 
