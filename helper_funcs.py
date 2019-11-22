@@ -1,22 +1,13 @@
-import keras
-from keras import backend as K
-from keras.models import Sequential
-from keras.layers import Activation
-from keras.layers.core import Dense, Flatten, Dropout
-from keras.optimizers import Adam
-from keras.metrics import categorical_crossentropy
-from keras.preprocessing.image import ImageDataGenerator
-from keras.layers.normalization import BatchNormalization
-from keras.layers.convolutional import Conv2D, MaxPooling2D
-from keras.models import model_from_json
-
 import typing
 import pandas as pd
 import cv2
+from keras.engine.saving import model_from_json
+from keras.engine.sequential import Sequential
+from keras.layers.convolutional import Conv2D
+from keras.layers.pooling import MaxPooling2D
+from keras.layers.core import Dense, Dropout, Flatten
 
-
-
-def save_model(model: typing.Type[keras.Sequential], model_name: str):
+def save_model(model: typing.Type[Sequential], model_name: str):
     # serialize model to JSON
     model_json = model.to_json()
     with open(model_name + ".json", "w") as json_file:
@@ -25,7 +16,7 @@ def save_model(model: typing.Type[keras.Sequential], model_name: str):
     model.save_weights(model_name + ".h5")
     print("Saved %s to disk" % model_name)
 
-def load_model(model_name: str) -> keras.Sequential:
+def load_model(model_name: str) -> Sequential:
     # load json and create model
     json_file = open(model_name + '.json', 'r')
     loaded_model_json = json_file.read()
@@ -37,15 +28,20 @@ def load_model(model_name: str) -> keras.Sequential:
 
     return loaded_model
 
-def create_new_model(regression: bool, class_num: int) -> keras.Sequential:
+def create_new_model(regression: bool, class_num: int) -> Sequential:
     model = Sequential()
 
-    model.add(Conv2D(64, (3, 3), activation='relu', padding='same', input_shape=(224, 224, 3)))
+    model.add(Conv2D(32, (3, 3), activation='relu', padding='same', input_shape=(112, 112, 3)))
+    model.add(Conv2D(32, (3, 3), activation='relu', padding='same'))
+    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
     model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
     model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(128, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
@@ -53,20 +49,15 @@ def create_new_model(regression: bool, class_num: int) -> keras.Sequential:
     model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(512, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(256, (3, 3), activation='relu', padding='same'))
     model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
     model.add(Flatten())
     model.add(Dropout(0.2))
-    model.add(Dense(4096, activation='relu'))
-    model.add(Dense(4096, activation='relu'))
+    model.add(Dense(2048, activation='relu'))
+    model.add(Dense(2048, activation='relu'))
 
     if regression:
         model.add(Dense(1, activation='linear'))
