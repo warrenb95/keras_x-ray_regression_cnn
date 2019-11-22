@@ -1,5 +1,5 @@
 from controller import Controller
-import trainer as trainer
+import calssification_trainer as calssification_trainer
 
 if __name__ == "__main__":
 
@@ -17,4 +17,4 @@ if __name__ == "__main__":
 
     #     model = trainer.train_new_classification()
 
-    model = trainer.train_new_classification()
+    calssification_trainer.train_new()
