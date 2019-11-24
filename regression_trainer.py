@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras.layers import Activation
 from keras.layers.core import Dense, Flatten, Dropout
 from keras.optimizers import Adam
-from keras.metrics import mean_absolute_percentage_error, categorical_crossentropy
+from keras.metrics import mean_absolute_percentage_error
 from keras.preprocessing.image import ImageDataGenerator
 from keras.layers.normalization import BatchNormalization
 from keras.layers.convolutional import Conv2D, MaxPooling2D
@@ -19,12 +19,11 @@ from datetime import datetime
 import helper_funcs
 import settings
 
-
 TESTING = settings.TESTING
-data_gen_batch_size = settings.data_gen_batch_size
 batch_size = settings.batch_size
 epochs = settings.epochs
 body_part = settings.body_part
+opt = settings.opt
 
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
@@ -35,10 +34,10 @@ valid_dataset_file = 'dataset/' + 'valid_' + body_part + '.csv'
 train_images_x_total = 0
 test_images_x_total = 0
 
-classification_train_total = 36808
-classification_test_total = 3197
-
 def load_regression_data():
+    global train_images_x_total
+    global test_images_x_total
+
     df = helper_funcs.load_dataset_attributes(train_dataset_file)
 
     images = helper_funcs.load_images(df)
@@ -63,102 +62,39 @@ def load_regression_data():
     train_images_x_total = len(train_images_x)
     test_images_x_total = len(test_images_x)
 
-    regression_train_generator = ImageDataGenerator().flow(train_images_x, train_y, batch_size=data_gen_batch_size)
-    regression_test_generator = ImageDataGenerator().flow(test_images_x, test_y, batch_size=data_gen_batch_size)
+    return (train_images_x, train_y, test_images_x, test_y)
 
-    return (regression_train_generator, regression_test_generator)
+def train_new_regression():
 
-def train_new_classification():
-    model = helper_funcs.create_new_model(False, 7)
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-
-    return train_classification_model(model)
-
-def train_classification():
-    model = helper_funcs.load_model(body_part)
-    model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-
-    return train_classification_model(model)
-
-def train_new_regression(regression_train_generator, regression_test_generator):
     model = helper_funcs.create_new_model(True, 0)
 
-    opt = Adam(learning_rate=1e-1)
-    model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
+    model.compile(optimizer = opt, loss = 'mse', metrics=["mse"])
 
-    return train_regression_model(model, regression_train_generator, regression_test_generator)
+    return train_regression_model(model)
 
-def train_regression(regression_train_generator, regression_test_generator):
+def train_old_regression():
+
     model = helper_funcs.load_model(body_part)
 
-    opt = Adam(learning_rate=1e-1)
-    model.compile(optimizer = opt, loss = 'mean_absolute_percentage_error')
+    model.compile(optimizer = opt, loss = 'mse', metrics=["mse"])
 
-    return train_regression_model(model, regression_train_generator, regression_test_generator)
+    return train_regression_model(model)
 
-def train_regression_model(model, regression_train_generator, regression_test_generator):
+def train_regression_model(model):
 
-    if not TESTING:
+    train_images_x, train_y, test_images_x, test_y = load_regression_data()
 
-        try:
-            print("----------------- TRAINING -----------------")
-            # history = model.fit(np.array(train_images_x),
-            #                     np.array(train_y),
-            #                     validation_data=(np.array(test_images_x), np.array(test_y)),
-            #                     epochs=epochs,
-            #                     batch_size=batch_size,
-            #                     verbose=1,
-            #                     shuffle=True)
-
-            # curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-            # # Plot training & validation data
-            # plt.plot(history.history['loss'])
-            # plt.plot(history.history['val_loss'])
-            # plt.title('training data')
-            # plt.ylabel('Loss')
-            # plt.xlabel('Epoch')
-            # plt.legend(['loss', 'val_loss'], loc='upper left')
-
-            # fname = "model_graphs/" + curr_datetime + '_' + body_part + '.jpg'
-            # plt.savefig(fname)
-
-        except KeyboardInterrupt:
-            helper_funcs.save_model(model, body_part)
-        else:
-            helper_funcs.save_model(model, body_part)
-    else:
-        print("----------------- TESTING -----------------")
-
-        model.fit_generator(regression_train_generator,
-                                validation_data=regression_test_generator,
-                                steps_per_epoch=round(train_images_x_total / batch_size),
-                                epochs=epochs,
-                                validation_steps=round(test_images_x_total / batch_size),
-                                verbose=1,
-                                shuffle=True)
-
-    return model
-
-
-def train_classification_model(model):
-
-    classification_train_generator = ImageDataGenerator().flow_from_directory('dataset/train',
-                                                                                target_size = (224, 224),
-                                                                                batch_size = 2)
-
-    classification_valid_generator = ImageDataGenerator().flow_from_directory('dataset/valid',
-                                                                                target_size = (224, 224),
-                                                                                batch_size = 2)
+    train_generator = ImageDataGenerator().flow(train_images_x, train_y, batch_size=batch_size)
+    test_generator = ImageDataGenerator().flow(test_images_x, test_y, batch_size=batch_size)
 
     if not TESTING:
 
         try:
             print("----------------- TRAINING -----------------")
-            history = model.fit_generator(classification_train_generator,
-                                validation_data=classification_valid_generator,
-                                steps_per_epoch=int(classification_test_total/2),
-                                validation_steps=int(classification_test_total/2),
+            history = model.fit_generator(train_generator,
+                                validation_data=test_generator,
+                                steps_per_epoch=int(train_images_x_total/batch_size),
+                                validation_steps=int(test_images_x_total/batch_size),
                                 epochs=epochs,
                                 verbose=1,
                                 shuffle=True)
@@ -168,6 +104,8 @@ def train_classification_model(model):
             # Plot training & validation data
             plt.plot(history.history['loss'])
             plt.plot(history.history['val_loss'])
+            plt.plot(history.history['mse'])
+            plt.plot(history.history['val_mse'])
             plt.title('training data')
             plt.ylabel('Loss')
             plt.xlabel('Epoch')
@@ -182,13 +120,14 @@ def train_classification_model(model):
             helper_funcs.save_model(model, body_part)
     else:
         print("----------------- TESTING -----------------")
-        model.fit_generator(classification_train_generator,
-                            steps_per_epoch=int(classification_test_total/data_gen_batch_size),
-                            validation_data=classification_valid_generator,
-                            validation_steps=int(classification_test_total/data_gen_batch_size),
-                            epochs=epochs,
-                            verbose=1,
-                            shuffle=True)
+
+        model.fit_generator(train_generator,
+                                validation_data=test_generator,
+                                steps_per_epoch=int(train_images_x_total/batch_size),
+                                validation_steps=int(test_images_x_total/batch_size),
+                                epochs=epochs,
+                                verbose=1,
+                                shuffle=True)
 
     return model
 

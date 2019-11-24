@@ -1,5 +1,6 @@
 from controller import Controller
 import calssification_trainer as calssification_trainer
+import regression_trainer as regression_trainer
 from datetime import datetime
 
 if __name__ == "__main__":
@@ -18,4 +19,5 @@ if __name__ == "__main__":
 
     #     model = trainer.train_new_classification()
 
-    calssification_trainer.train_new()
+    # calssification_trainer.train_new()
+    regression_trainer.train_new_regression()

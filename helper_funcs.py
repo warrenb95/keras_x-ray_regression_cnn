@@ -75,7 +75,7 @@ def load_images(df: pd.DataFrame):
 
     for path in df['path']:
         cur_image = cv2.imread(path)
-        cur_image = cv2.resize(cur_image, (224, 224))
+        cur_image = cv2.resize(cur_image, (112, 112))
 
         images.append(cur_image)
 
