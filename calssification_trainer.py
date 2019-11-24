@@ -1,7 +1,7 @@
 import settings
 import helper_funcs
 from keras.preprocessing.image import ImageDataGenerator
-import datetime
+from datetime import datetime
 from matplotlib import pyplot as plt
 
 TESTING = settings.TESTING
@@ -65,9 +65,9 @@ def train_classification_model(model):
             fname = "model_graphs/" + curr_datetime + '_' + body_part + '.jpg'
             plt.savefig(fname)
 
-        except KeyboardInterrupt:
             helper_funcs.save_model(model, body_part)
-        else:
+
+        except KeyboardInterrupt:
             helper_funcs.save_model(model, body_part)
     else:
         print("----------------- TESTING -----------------")
@@ -78,4 +78,3 @@ def train_classification_model(model):
                             epochs=epochs,
                             verbose=1,
                             shuffle=True)
-
