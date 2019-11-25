@@ -1,14 +1,8 @@
-import keras
-from keras import backend as K
-from keras.models import Sequential
-from keras.layers import Activation
-from keras.layers.core import Dense, Flatten, Dropout
-from keras.optimizers import Adam
-from keras.metrics import mean_absolute_percentage_error
+import settings
+import helper_funcs
 from keras.preprocessing.image import ImageDataGenerator
-from keras.layers.normalization import BatchNormalization
-from keras.layers.convolutional import Conv2D, MaxPooling2D
-from keras.callbacks import LearningRateScheduler
+from datetime import datetime
+from matplotlib import pyplot as plt
 
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
@@ -68,7 +62,8 @@ def train_new_regression():
 
     model = helper_funcs.create_new_model(True, 0)
 
-    model.compile(optimizer = opt, loss = 'mse', metrics=["mse"])
+    # model.compile(optimizer = opt, loss = 'msle')
+    model.compile(optimizer = opt, loss = 'mse')
 
     return train_regression_model(model)
 
@@ -76,7 +71,8 @@ def train_old_regression():
 
     model = helper_funcs.load_model(body_part)
 
-    model.compile(optimizer = opt, loss = 'mse', metrics=["mse"])
+    # model.compile(optimizer = opt, loss = 'msle')
+    model.compile(optimizer = opt, loss = 'mse')
 
     return train_regression_model(model)
 
@@ -104,8 +100,6 @@ def train_regression_model(model):
             # Plot training & validation data
             plt.plot(history.history['loss'])
             plt.plot(history.history['val_loss'])
-            plt.plot(history.history['mse'])
-            plt.plot(history.history['val_mse'])
             plt.title('training data')
             plt.ylabel('Loss')
             plt.xlabel('Epoch')
@@ -141,10 +135,9 @@ def predict_abnormality(model):
 
     predict_y = model.predict_generator(ImageDataGenerator().flow(valid_images_x, valid_y, batch_size=batch_size))
 
-    # diff = predict_y.flatten() - valid_y
+    diff = predict_y.flatten() - valid_y
     # percentage_diff = (diff/ valid_y) * 100
-    # abs_percentage = np.abs(percentage_diff)
-    # mean = np.mean(abs_percentage)
+    abs_percentage = np.abs(diff)
+    mean = np.mean(abs_percentage)
 
-    for i in range(len(predict_y)):
-        print("Actual: {}, Prediction: {}".format(valid_y[i], predict_y[i]))
+    print("Mean diff: {}".format(mean))
