@@ -18,4 +18,7 @@ if __name__ == "__main__":
 
     #     model = trainer.train_new_classification()
 
-    calssification_trainer.train_new()
+    # calssification_trainer.train_new()
+
+    controller = Controller()
+    controller.run()

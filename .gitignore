@@ -1,5 +1,6 @@
 /MURA-v1.1
 /dataset
+/user_in
 *.json
 *.h5
 /model_graphs
