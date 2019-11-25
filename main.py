@@ -20,4 +20,6 @@ if __name__ == "__main__":
     #     model = trainer.train_new_classification()
 
     # calssification_trainer.train_new()
+    
     regression_trainer.train_new_regression()
+
