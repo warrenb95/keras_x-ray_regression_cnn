@@ -20,4 +20,5 @@ if __name__ == "__main__":
     #     model = trainer.train_new_classification()
 
     # calssification_trainer.train_new()
-    regression_trainer.train_new_regression()
+    model = regression_trainer.train_new_regression()
+    regression_trainer.predict_abnormality(model)
