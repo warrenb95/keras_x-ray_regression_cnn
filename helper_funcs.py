@@ -10,20 +10,20 @@ from keras.layers.core import Dense, Dropout, Flatten
 def save_model(model: typing.Type[Sequential], model_name: str):
     # serialize model to JSON
     model_json = model.to_json()
-    with open("models/" + model_name + ".json", "w") as json_file:
+    with open(model_name + ".json", "w") as json_file:
         json_file.write(model_json)
     # serialize weights to HDF5
-    model.save_weights("models/" + model_name + ".h5")
+    model.save_weights(model_name + ".h5")
     print("Saved %s to disk" % model_name)
 
 def load_model(model_name: str) -> Sequential:
     # load json and create model
-    json_file = open("models/" + model_name + '.json', 'r')
+    json_file = open(model_name + '.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights("models/" + model_name + ".h5")
+    loaded_model.load_weights(model_name + ".h5")
     print("Loaded %s from disk" % model_name)
 
     return loaded_model
