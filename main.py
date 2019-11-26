@@ -1,6 +1,6 @@
 from controller import Controller
-import calssification_trainer as calssification_trainer
-import regression_trainer as regression_trainer
+import classification_trainer
+import regression_trainer
 from datetime import datetime
 
 if __name__ == "__main__":
@@ -21,9 +21,8 @@ if __name__ == "__main__":
 
     # calssification_trainer.train_new()
 
-    model = regression_trainer.train_new_regression()
-    regression_trainer.validate(model)
+    # model = regression_trainer.train_new_regression()
+    # regression_trainer.validate(model)
 
-    # controller = Controller()
-    # controller.run()
-
+    controller = Controller()
+    controller.run()

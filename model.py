@@ -1,9 +1,8 @@
 import os
-import cv2
+import helper_funcs
+import classification_trainer
 
 class Model():
-
-    
 
     def __init__(self):
         print("init model")
@@ -34,3 +33,7 @@ class Model():
     def set_next_image_path(self):
         if self.current_image + 1 < len(self.image_paths):
             self.current_image += 1
+
+    def classify_image(self, image_path):
+        class_model = helper_funcs.load_model("class")
+        return classification_trainer.predict_classification(class_model, image_path)

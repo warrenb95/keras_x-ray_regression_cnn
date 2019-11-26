@@ -5,8 +5,10 @@ class View():
     def __init__(self, root):
         print("init view")
 
-        self.result_val = 0.0
-        self.result_str = str(self.result_val) + " - Abnormal"
+        self.classification_result_str = "NO_CLASSIFICATION"
+
+        self.regression_result_val = 0.0
+        self.regression_result_str = str(self.regression_result_val) + " - Abnormal"
 
         self.file_list = []
 
@@ -35,8 +37,11 @@ class View():
 
         self.make_file_frame(self.side_frame)
 
-        self.result_label = tk.Label(self.side_frame, text = self.result_str, font = "40 40", fg = "#ff5c33", borderwidth = 2, relief = "solid")
-        self.result_label.pack(fill = tk.X, pady = 75, padx = 5)
+        self.classification_result_label = tk.Label(self.side_frame, text = self.classification_result_str, font = "20 20", fg = "#ff5c33", borderwidth = 2, relief = "solid")
+        self.classification_result_label.pack(fill = tk.X, pady = 25, padx = 5)
+
+        self.regression_result_label = tk.Label(self.side_frame, text = self.regression_result_str, font = "40 40", fg = "#ff5c33", borderwidth = 2, relief = "solid")
+        self.regression_result_label.pack(fill = tk.X, pady = 25, padx = 5)
 
         self.make_btn_frame(self.side_frame)
 
@@ -69,3 +74,6 @@ class View():
         self.process_btn = tk.Button(self.btn_frame, text = "Process X-Ray", font = "24")
         self.process_btn.grid(row=1, column=0, columnspan=2, sticky=tk.N + tk.E + tk.S + tk.W, padx = 50, pady = 12.5)
 
+    def set_classification_str(self, classification):
+        self.classification_result_str = classification
+        self.classification_result_label.configure(text=self.classification_result_str)

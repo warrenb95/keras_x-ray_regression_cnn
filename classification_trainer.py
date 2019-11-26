@@ -3,6 +3,7 @@ import helper_funcs
 from keras.preprocessing.image import ImageDataGenerator
 from datetime import datetime
 from matplotlib import pyplot as plt
+import cv2
 
 TESTING = settings.TESTING
 batch_size = settings.batch_size
@@ -78,3 +79,13 @@ def train_classification_model(model):
                             epochs=epochs,
                             verbose=1,
                             shuffle=True)
+
+def predict_classification(model, image_path):
+    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
+
+    cur_image = cv2.imread(image_path)
+    cur_image = cv2.resize(cur_image, (112, 112))
+
+    prediction_y = model.predict_classes([[cur_image]])
+
+    return prediction_y[0]
