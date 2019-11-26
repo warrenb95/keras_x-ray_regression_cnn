@@ -16,22 +16,20 @@ import settings
 TESTING = settings.TESTING
 batch_size = settings.batch_size
 epochs = settings.epochs
-body_part = settings.body_part
 opt = settings.opt
 
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
 
-train_dataset_file = 'dataset/' + 'train_' + body_part + '.csv'
-valid_dataset_file = 'dataset/' + 'valid_' + body_part + '.csv'
-
 train_images_x_total = 0
 test_images_x_total = 0
 validation_images_x_total =0
 
-def load_regression_data():
+def load_regression_data(body_part):
     global train_images_x_total
     global test_images_x_total
+
+    train_dataset_file = 'dataset/' + 'train_' + body_part + '.csv'
 
     df = helper_funcs.load_dataset_attributes(train_dataset_file)
 
@@ -59,7 +57,7 @@ def load_regression_data():
 
     return (train_images_x, train_y, test_images_x, test_y)
 
-def train_new_regression():
+def train_new(body_part):
 
     model = helper_funcs.create_new_model(True, 0)
 
@@ -68,7 +66,7 @@ def train_new_regression():
 
     return train_regression_model(model)
 
-def train_old_regression():
+def train_old(body_part):
 
     model = helper_funcs.load_model(body_part)
 
@@ -79,7 +77,7 @@ def train_old_regression():
 
 def train_regression_model(model):
 
-    train_images_x, train_y, test_images_x, test_y = load_regression_data()
+    train_images_x, train_y, test_images_x, test_y = load_regression_data(body_part)
 
     train_generator = ImageDataGenerator().flow(train_images_x, train_y, batch_size=batch_size)
     test_generator = ImageDataGenerator().flow(test_images_x, test_y, batch_size=batch_size)
@@ -126,8 +124,10 @@ def train_regression_model(model):
 
     return model
 
-def validate(model):
+def validate(model, body_part):
     global validation_images_x_total
+
+    valid_dataset_file = 'dataset/' + 'valid_' + body_part + '.csv'
 
     df = helper_funcs.load_dataset_attributes(valid_dataset_file)
 

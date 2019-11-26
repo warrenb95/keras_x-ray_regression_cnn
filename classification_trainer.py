@@ -8,7 +8,6 @@ import cv2
 TESTING = settings.TESTING
 batch_size = settings.batch_size
 epochs = settings.epochs
-body_part = settings.body_part
 opt = settings.opt
 
 train_path = 'dataset/train'
@@ -24,7 +23,7 @@ def train_new():
     train_classification_model(model)
 
 def train_old():
-    model = helper_funcs.load_model(body_part)
+    model = helper_funcs.load_model('class')
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     train_classification_model(model)
@@ -63,13 +62,13 @@ def train_classification_model(model):
             plt.xlabel('Epoch')
             plt.legend(['accuracy', 'val_accuracy', 'loss', 'val_loss'], loc='upper left')
 
-            fname = "model_graphs/" + curr_datetime + '_' + body_part + '.jpg'
+            fname = "model_graphs/" + curr_datetime + '_class.jpg'
             plt.savefig(fname)
 
-            helper_funcs.save_model(model, body_part)
+            helper_funcs.save_model(model, 'class')
 
         except KeyboardInterrupt:
-            helper_funcs.save_model(model, body_part)
+            helper_funcs.save_model(model, 'class')
     else:
         print("----------------- TESTING -----------------")
         model.fit_generator(classification_train_generator,
