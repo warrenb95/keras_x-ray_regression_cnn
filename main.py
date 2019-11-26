@@ -22,7 +22,7 @@ if __name__ == "__main__":
     # calssification_trainer.train_new()
 
     model = regression_trainer.train_new_regression()
-    regression_trainer.predict_abnormality(model)
+    regression_trainer.validate(model)
 
     # controller = Controller()
     # controller.run()

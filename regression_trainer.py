@@ -27,6 +27,7 @@ valid_dataset_file = 'dataset/' + 'valid_' + body_part + '.csv'
 
 train_images_x_total = 0
 test_images_x_total = 0
+validation_images_x_total =0
 
 def load_regression_data():
     global train_images_x_total
@@ -125,19 +126,26 @@ def train_regression_model(model):
 
     return model
 
-def predict_abnormality(model):
+def validate(model):
+    global validation_images_x_total
 
     df = helper_funcs.load_dataset_attributes(valid_dataset_file)
 
     valid_images_x = np.array(helper_funcs.load_images(df))
-
     valid_y = np.array(df['target'])
 
-    predict_y = model.predict_generator(ImageDataGenerator().flow(valid_images_x, valid_y, batch_size=batch_size))
+    validation_images_x_total = len(valid_images_x)
 
-    diff = predict_y.flatten() - valid_y
-    # percentage_diff = (diff/ valid_y) * 100
-    abs_percentage = np.abs(diff)
-    mean = np.mean(abs_percentage)
+    predict_y = model.predict_generator(ImageDataGenerator().flow(valid_images_x, valid_y, batch_size=batch_size),
+                                        verbose=1)
 
-    print("Mean diff: {}".format(mean))
+    flat_y = predict_y.flatten()
+
+    for i in range(flat_y):
+        if valid_y[i] == 1.0 and flat_y[i] >= 0.6:
+            flat_y[i] = 1.0
+
+    diff = flat_y - valid_y
+    mean = np.mean(diff)
+
+    print("Mean difference: {:.2f}".format(np.abs(mean)))
