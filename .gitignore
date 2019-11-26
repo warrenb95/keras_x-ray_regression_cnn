@@ -1,5 +1,5 @@
 /MURA-v1.1
-*_pycache_
+/_pycache_
 /dataset/train
 /dataset/valid
 /user_in/*.png
