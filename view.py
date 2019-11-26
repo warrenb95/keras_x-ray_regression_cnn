@@ -23,7 +23,7 @@ class View():
         self.image_canvas.pack(side = tk.LEFT)
 
     def add_tmp_img(self):
-        self.img = ImageTk.PhotoImage(Image.open("temp_image.png").resize((self.image_canvas.winfo_width(), self.image_canvas.winfo_height()), Image.ANTIALIAS))
+        self.img = ImageTk.PhotoImage(Image.open("instructions.png").resize((self.image_canvas.winfo_width(), self.image_canvas.winfo_height()), Image.ANTIALIAS))
         self.image_on_canvas =  self.image_canvas.create_image(0, 0, anchor=tk.NW, image=self.img)
 
     def set_image(self, image_path):
