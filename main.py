@@ -2,6 +2,7 @@ from controller import Controller
 import classification_trainer
 import regression_trainer
 from datetime import datetime
+from keras import backend as k_back
 
 if __name__ == "__main__":
 
@@ -34,3 +35,10 @@ if __name__ == "__main__":
         model = regression_trainer.train_old('wrist')
     else:
         print("Invalid option... Bye")
+
+    # The following is for training purposes
+    model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
+    for m in model_list:
+        model = regression_trainer.train_old(m)
+        model = None
+        k_back.clear_session()
