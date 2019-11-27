@@ -13,10 +13,10 @@ if __name__ == "__main__":
 
     usr_in = input("Please select: ")
 
-    if int(usr_in) == 1:
+    if usr_in == '1':
         controller = Controller()
         controller.run()
-    elif int(usr_in) == 2:
+    elif usr_in == '2':
         model = classification_trainer.train_old()
     elif usr_in == 'elbow':
         model = regression_trainer.train_old('elbow')
