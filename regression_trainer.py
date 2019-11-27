@@ -64,7 +64,7 @@ def train_new(body_part):
     # model.compile(optimizer = opt, loss = 'msle')
     model.compile(optimizer = opt, loss = 'mse')
 
-    return train_regression_model(model)
+    return train_regression_model(model, body_part)
 
 def train_old(body_part):
 
@@ -73,9 +73,9 @@ def train_old(body_part):
     # model.compile(optimizer = opt, loss = 'msle')
     model.compile(optimizer = opt, loss = 'mse')
 
-    return train_regression_model(model)
+    return train_regression_model(model, body_part)
 
-def train_regression_model(model):
+def train_regression_model(model, body_part):
 
     train_images_x, train_y, test_images_x, test_y = load_regression_data(body_part)
 
