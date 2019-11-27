@@ -1,6 +1,7 @@
 import os
 import helper_funcs
 import classification_trainer
+import regression_trainer
 
 class Model():
 
@@ -37,3 +38,24 @@ class Model():
     def classify_image(self, image_path):
         class_model = helper_funcs.load_model("class")
         return classification_trainer.predict_classification(class_model, image_path)
+
+    def predict_abnormality(self, image_path, class_result):
+        if class_result == 0:
+            return regression_trainer.predict(image_path, 'elbow')
+        elif class_result == 1:
+            return regression_trainer.predict(image_path, 'finger')
+        elif class_result == 2:
+            return regression_trainer.predict(image_path, 'forearm')
+        elif class_result == 3:
+            return regression_trainer.predict(image_path, 'hand')
+        elif class_result == 4:
+            return regression_trainer.predict(image_path, 'humerus')
+        elif class_result == 5:
+            return regression_trainer.predict(image_path, 'shoulder')
+        elif class_result == 6:
+            return regression_trainer.predict(image_path, 'wrist')
+        else:
+            print('Invalid class_result {}'.format(class_result))
+            return None
+
+

@@ -46,26 +46,35 @@ class Controller():
     def process_image(self, event):
         image_path = self.model.image_paths[self.model.current_image]
 
-        classification = self.model.classify_image(image_path)
+        class_result = self.model.classify_image(image_path)
 
-        if classification == 0:
+        if class_result == 0:
             self.view.set_classification_str("Class - Elbow")
-            print("Prediction: {}".format(classification))
-        elif classification == 1:
+            print("Prediction: {}".format(class_result))
+        elif class_result == 1:
             self.view.set_classification_str("Class - Finger")
-            print("Prediction: {}".format(classification))
-        elif classification == 2:
+            print("Prediction: {}".format(class_result))
+        elif class_result == 2:
             self.view.set_classification_str("Class - Forearm")
-            print("Prediction: {}".format(classification))
-        elif classification == 3:
+            print("Prediction: {}".format(class_result))
+        elif class_result == 3:
             self.view.set_classification_str("Class - Hand")
-            print("Prediction: {}".format(classification))
-        elif classification == 4:
+            print("Prediction: {}".format(class_result))
+        elif class_result == 4:
             self.view.set_classification_str("Class - Humerus")
-            print("Prediction: {}".format(classification))
-        elif classification == 5:
+            print("Prediction: {}".format(class_result))
+        elif class_result == 5:
             self.view.set_classification_str("Class - Shoulder")
-            print("Prediction: {}".format(classification))
-        elif classification == 6:
+            print("Prediction: {}".format(class_result))
+        elif class_result == 6:
             self.view.set_classification_str("Class - Wrist")
-            print("Prediction: {}".format(classification))
+            print("Prediction: {}".format(class_result))
+
+        regress_result = self.model.predict_abnormality(image_path, class_result)
+
+        print("Prediction is {}".format(regress_result*100))
+
+        if regress_result == None:
+            return
+
+        self.view.set_regression_str(regress_result)

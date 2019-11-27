@@ -7,8 +7,7 @@ class View():
 
         self.classification_result_str = "NO_CLASSIFICATION"
 
-        self.regression_result_val = 0.0
-        self.regression_result_str = str(self.regression_result_val) + " - Abnormal"
+        self.regression_result_str = "0.0 - Abnormal"
 
         self.file_list = []
 
@@ -40,7 +39,7 @@ class View():
         self.classification_result_label = tk.Label(self.side_frame, text = self.classification_result_str, font = "20 20", fg = "#ff5c33", borderwidth = 2, relief = "solid")
         self.classification_result_label.pack(fill = tk.X, pady = 25, padx = 5)
 
-        self.regression_result_label = tk.Label(self.side_frame, text = self.regression_result_str, font = "40 40", fg = "#ff5c33", borderwidth = 2, relief = "solid")
+        self.regression_result_label = tk.Label(self.side_frame, text = self.regression_result_str, font = "20 20", fg = "#ff5c33", borderwidth = 2, relief = "solid")
         self.regression_result_label.pack(fill = tk.X, pady = 25, padx = 5)
 
         self.make_btn_frame(self.side_frame)
@@ -77,3 +76,7 @@ class View():
     def set_classification_str(self, classification):
         self.classification_result_str = classification
         self.classification_result_label.configure(text=self.classification_result_str)
+
+    def set_regression_str(self, regress_result):
+        self.regression_result_str = str(regress_result) + " - Abnormal"
+        self.regression_result_label.configure(text=self.regression_result_str)
