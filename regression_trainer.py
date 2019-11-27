@@ -7,6 +7,7 @@ from matplotlib import pyplot as plt
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import numpy as np
+import cv2
 
 from datetime import datetime
 
@@ -149,3 +150,16 @@ def validate(model, body_part):
     mean = np.mean(diff)
 
     print("Mean difference: {:.2f}".format(np.abs(mean)))
+
+def predict(image_path, body_part):
+    model = helper_funcs.load_model(body_part)
+
+    # model.compile(optimizer = opt, loss = 'msle')
+    model.compile(optimizer = opt, loss = 'mse')
+
+    cur_image = cv2.imread(image_path)
+    cur_image = cv2.resize(cur_image, (112, 112))
+
+    prediction_y = model.predict([[cur_image]])
+
+    return prediction_y[0]
