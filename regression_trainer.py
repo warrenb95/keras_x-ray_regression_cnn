@@ -62,8 +62,8 @@ def train_new(body_part):
 
     model = helper_funcs.create_new_model(True, 0)
 
-    # model.compile(optimizer = opt, loss = 'msle')
-    model.compile(optimizer = opt, loss = 'mse')
+    # model.compile(optimizer = opt, loss = 'mse')
+    model.compile(optimizer=opt, loss='mape')
 
     return train_regression_model(model, body_part)
 
@@ -71,8 +71,8 @@ def train_old(body_part):
 
     model = helper_funcs.load_model(body_part)
 
-    # model.compile(optimizer = opt, loss = 'msle')
-    model.compile(optimizer = opt, loss = 'mse')
+    # model.compile(optimizer = opt, loss = 'mse')
+    model.compile(optimizer=opt, loss='mape')
 
     return train_regression_model(model, body_part)
 
@@ -107,6 +107,7 @@ def train_regression_model(model, body_part):
 
             fname = "model_graphs/" + curr_datetime + '_' + body_part + '.jpg'
             plt.savefig(fname)
+            plt.close()
 
         except KeyboardInterrupt:
             helper_funcs.save_model(model, body_part)
@@ -154,8 +155,7 @@ def validate(model, body_part):
 def predict(image_path, body_part):
     model = helper_funcs.load_model(body_part)
 
-    # model.compile(optimizer = opt, loss = 'msle')
-    model.compile(optimizer = opt, loss = 'mse')
+    model.compile(optimizer = opt, loss = 'mape')
 
     cur_image = cv2.imread(image_path)
     cur_image = cv2.resize(cur_image, (112, 112))
