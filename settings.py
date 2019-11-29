@@ -2,6 +2,7 @@ import keras
 
 TESTING = False
 batch_size = 25
-epochs = 100
-opt = keras.optimizers.SGD(learning_rate=0.001, momentum=0.9, nesterov=True)
-# opt = keras.optimizers.Adam(learning_rate=0.001, amsgrad=True)
+epochs = 25
+# opt = keras.optimizers.SGD(learning_rate=0.001, momentum=0.9, nesterov=True)
+# opt = keras.optimizers.SGD(learning_rate=0.001, momentum=0.9)
+opt = keras.optimizers.Nadam(learning_rate=0.001, beta_1=0.9, beta_2=0.999)
