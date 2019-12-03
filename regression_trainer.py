@@ -109,6 +109,18 @@ def train_regression_model(model, body_part):
 
         except KeyboardInterrupt:
             helper_funcs.save_model(model, body_part)
+
+            # Plot training & validation data
+            plt.plot(history.history['loss'])
+            plt.plot(history.history['val_loss'])
+            plt.title('training data')
+            plt.ylabel('Loss')
+            plt.xlabel('Epoch')
+            plt.legend(['loss', 'val_loss'], loc='upper left')
+
+            fname = "model_graphs/" + curr_datetime + '_' + body_part + '.jpg'
+            plt.savefig(fname)
+            plt.close()
         else:
             helper_funcs.save_model(model, body_part)
     else:
