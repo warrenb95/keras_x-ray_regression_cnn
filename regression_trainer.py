@@ -85,6 +85,7 @@ def train_regression_model(model, body_part):
 
         try:
             print("----------------- TRAINING -----------------")
+            history = None
             history = model.fit_generator(train_generator,
                                 validation_data=test_generator,
                                 steps_per_epoch=int(train_images_x_total/batch_size),
