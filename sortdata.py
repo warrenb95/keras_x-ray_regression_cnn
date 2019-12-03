@@ -33,7 +33,6 @@ def copy_files(src: str , dest: str, value: int, model_type: str):
         new_file_name = dest + '/' + str(image_count) + '.png'
         if os.path.isfile(full_file_name):
             shutil.copy(full_file_name, new_file_name)
-            pre_process.process_image(new_file_name)
             image_count += 1
 
             add_to_dataset_file(new_file_name, value, model_type)
