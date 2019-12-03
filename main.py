@@ -37,10 +37,10 @@ if __name__ == "__main__":
     #     print("Invalid option... Bye")
 
     # The following is for training purposes
-    model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
-    for m in model_list:
-        model = regression_trainer.train_new(m)
-        model = None
-        k_back.clear_session()
+    # model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
+    # for m in model_list:
+    #     model = regression_trainer.train_new(m)
+    #     model = None
+    #     k_back.clear_session()
 
-    # model = regression_trainer.train_new(model_list[0])
+    model = classification_trainer.train_new()

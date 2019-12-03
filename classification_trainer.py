@@ -8,7 +8,7 @@ import cv2
 TESTING = settings.TESTING
 batch_size = settings.batch_size
 epochs = settings.epochs
-opt = settings.opt
+opt = settings.classification_opt
 
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
