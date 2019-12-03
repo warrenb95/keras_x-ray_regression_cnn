@@ -85,7 +85,6 @@ def train_regression_model(model, body_part):
 
         try:
             print("----------------- TRAINING -----------------")
-            history = None
             history = model.fit_generator(train_generator,
                                 validation_data=test_generator,
                                 steps_per_epoch=int(train_images_x_total/batch_size),
@@ -107,6 +106,7 @@ def train_regression_model(model, body_part):
             fname = "model_graphs/" + curr_datetime + '_' + body_part + '.jpg'
             plt.savefig(fname)
             plt.close()
+            history = None
 
         except KeyboardInterrupt:
             helper_funcs.save_model(model, body_part)

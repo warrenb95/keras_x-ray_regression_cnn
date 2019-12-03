@@ -74,8 +74,12 @@ def load_images(df: pd.DataFrame):
     images = []
 
     for path in df['path']:
-        cur_image = cv2.imread(path)
-        cur_image = cv2.resize(cur_image, (112, 112))
+        try:
+            cur_image = cv2.imread(path)
+            cur_image = cv2.resize(cur_image, (112, 112))
+        except:
+            print("Error: {}, not loaded".format(path))
+            exit()
 
         images.append(cur_image)
 

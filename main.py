@@ -38,9 +38,10 @@ if __name__ == "__main__":
 
     # The following is for training purposes
     # model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
-    # for m in model_list:
-    #     model = regression_trainer.train_new(m)
-    #     model = None
-    #     k_back.clear_session()
+    model_list = ['shoulder', 'wrist']
+    for m in model_list:
+        model = regression_trainer.train_new(m)
+        model = None
+        k_back.clear_session()
 
-    model = classification_trainer.train_new()
+    # model = classification_trainer.train_new()
