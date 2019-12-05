@@ -14,19 +14,27 @@ from datetime import datetime
 import helper_funcs
 import settings
 
+# Settings
+# ---------------------------------------------------------------------
 TESTING = settings.TESTING
 batch_size = settings.batch_size
 epochs = settings.epochs
 opt = settings.regression_opt
+# ---------------------------------------------------------------------
 
+# File variables
+# ---------------------------------------------------------------------
 train_path = 'dataset/train'
 valid_path = 'dataset/valid'
-
 train_images_x_total = 0
 test_images_x_total = 0
 validation_images_x_total =0
+# ---------------------------------------------------------------------
 
 def load_regression_data(body_part):
+    '''
+    Load the regression data and images for the 'body_part'.
+    '''
     global train_images_x_total
     global test_images_x_total
 
@@ -59,23 +67,25 @@ def load_regression_data(body_part):
     return (train_images_x, train_y, test_images_x, test_y)
 
 def train_new(body_part):
-
+    '''
+    Create and train a new model for the 'body_part'.
+    '''
     model = helper_funcs.create_new_model(True, 0)
-
     model.compile(optimizer = opt, loss = 'mse')
-
     return train_regression_model(model, body_part)
 
 def train_old(body_part):
-
+    '''
+    Load and train the 'body_part' model.
+    '''
     model = helper_funcs.load_model(body_part)
-
     model.compile(optimizer = opt, loss = 'mse')
-
     return train_regression_model(model, body_part)
 
 def train_regression_model(model, body_part):
-
+    '''
+    Set up and train the model for the body_part
+    '''
     train_images_x, train_y, test_images_x, test_y = load_regression_data(body_part)
 
     train_generator = ImageDataGenerator().flow(train_images_x, train_y, batch_size=batch_size)
@@ -138,6 +148,9 @@ def train_regression_model(model, body_part):
     return model
 
 def validate(model, body_part):
+    '''
+    Custom validation process for regression models
+    '''
     global validation_images_x_total
 
     valid_dataset_file = 'dataset/' + 'valid_' + body_part + '.csv'
@@ -164,6 +177,9 @@ def validate(model, body_part):
     print("Mean difference: {:.2f}".format(np.abs(mean)))
 
 def predict(image_path, body_part):
+    '''
+    Predict the abnormality of the image_path.
+    '''
     model = helper_funcs.load_model(body_part)
 
     model.compile(optimizer = opt, loss = 'msle')

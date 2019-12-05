@@ -11,9 +11,15 @@ class Model():
         self.user_in_path = os.path.dirname(os.path.abspath(__file__)) + "/user_in"
 
     def add_files(self, event):
+        '''
+        Opens file explorer at 'user_in_path'.
+        '''
         os.startfile(self.user_in_path)
 
     def upload_files(self):
+        '''
+        Uploads the files from 'user_in_path' to the program.
+        '''
         src_files = os.listdir(self.user_in_path)
 
         self.image_paths = []

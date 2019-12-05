@@ -7,17 +7,25 @@ import os
 
 if __name__ == "__main__":
 
+    # Uncomment to run the GUI
+    # ---------------------------------------------------------------------
     # controller = Controller()
     # controller.run()
+    # ---------------------------------------------------------------------
 
-    # The following is for training purposes
+    # Uncomment to train the regression models
+    # ---------------------------------------------------------------------
     model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
     for m in model_list:
         model = regression_trainer.train_old(m)
         model = None
         k_back.clear_session()
+    # ---------------------------------------------------------------------
 
+    # Uncomment to train classification model
+    # ---------------------------------------------------------------------
     model = classification_trainer.train_old()
+    # ---------------------------------------------------------------------
 
     # ---------------------------------------------------------------------
     # ---------------------------------------------------------------------
