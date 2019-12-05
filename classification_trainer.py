@@ -85,21 +85,6 @@ def train_classification_model(model):
             '''
             Handle a keyboard interupts 'ctrl+c'
             '''
-            curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-
-            # Plot training & validation data.
-            plt.plot(history.history['accuracy'])
-            plt.plot(history.history['val_accuracy'])
-            plt.plot(history.history['loss'])
-            plt.plot(history.history['val_loss'])
-            plt.title('training data')
-            plt.ylabel('Accuracy')
-            plt.xlabel('Epoch')
-            plt.legend(['accuracy', 'val_accuracy', 'loss', 'val_loss'], loc='upper left')
-
-            fname = "model_graphs/" + curr_datetime + '_class.jpg'
-            plt.savefig(fname)
-
             helper_funcs.save_model(model, 'class')
     else:
         print("----------------- TESTING -----------------")
