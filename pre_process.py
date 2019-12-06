@@ -56,6 +56,11 @@ def find_boundary(image):
 
     return low_x, high_x, low_y, high_y
 
+def crop_image(path):
+    cur_image = cv2.imread(path)
+    cur_image = cv2.resize(cur_image, (112, 112))
+    cv2.imwrite(path, cur_image)
+
 
 train_elbow_folder = 'dataset/train/elbow'
 train_finger_folder = 'dataset/train/finger'
@@ -89,6 +94,7 @@ for src in sources:
         full_file_name = os.path.join(src, file_name)
         if os.path.isfile(full_file_name):
             try:
-                process_image(full_file_name)
+                # process_image(full_file_name)
+                crop_image(full_file_name)
             except:
                 print("Cannot process - {}".format(full_file_name))
