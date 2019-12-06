@@ -118,32 +118,34 @@ def train_regression_model(model, body_part):
             plt.close()
             history = None
 
-        except KeyboardInterrupt:
             helper_funcs.save_model(model, body_part)
 
-            # Plot training & validation data
-            plt.plot(history.history['loss'])
-            plt.plot(history.history['val_loss'])
-            plt.title('training data')
-            plt.ylabel('Loss')
-            plt.xlabel('Epoch')
-            plt.legend(['loss', 'val_loss'], loc='upper left')
-
-            fname = "model_graphs/" + curr_datetime + '_' + body_part + '.jpg'
-            plt.savefig(fname)
-            plt.close()
+        except KeyboardInterrupt:
+            helper_funcs.save_model(model, body_part)
         else:
             helper_funcs.save_model(model, body_part)
     else:
         print("----------------- TESTING -----------------")
+        history = model.fit_generator(train_generator,
+                            validation_data=test_generator,
+                            steps_per_epoch=int(train_images_x_total/batch_size),
+                            validation_steps=int(test_images_x_total/batch_size),
+                            epochs=epochs,
+                            verbose=1,
+                            shuffle=True)
 
-        model.fit_generator(train_generator,
-                                validation_data=test_generator,
-                                steps_per_epoch=int(train_images_x_total/batch_size),
-                                validation_steps=int(test_images_x_total/batch_size),
-                                epochs=epochs,
-                                verbose=1,
-                                shuffle=True)
+        # Plot training & validation data
+        plt.plot(history.history['loss'])
+        plt.plot(history.history['val_loss'])
+        plt.title('training data')
+        plt.ylabel('Loss')
+        plt.xlabel('Epoch')
+        plt.legend(['loss', 'val_loss'], loc='upper left')
+
+        fname = "model_graphs/TESTING_" + body_part + '.jpg'
+        plt.savefig(fname)
+        plt.close()
+        history = None
 
     return model
 
