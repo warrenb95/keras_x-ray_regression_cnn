@@ -85,7 +85,6 @@ def load_images(df: pd.DataFrame):
     '''
     Load and return the correct images from the 'df'.
     '''
-
     images = []
 
     for path in df['path']:

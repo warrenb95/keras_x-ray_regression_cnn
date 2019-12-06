@@ -78,7 +78,12 @@ valid_humerus_folder = 'dataset/valid/humerus'
 valid_shoulder_folder = 'dataset/valid/shoulder'
 valid_wrist_folder = 'dataset/valid/wrist'
 
-sources =[train_shoulder_folder,
+sources =[train_elbow_folder,
+            train_finger_folder,
+            train_forearm_folder,
+            train_hand_folder,
+            train_humerus_folder,
+            train_shoulder_folder,
             train_wrist_folder,
             valid_elbow_folder,
             valid_finger_folder,
