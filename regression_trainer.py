@@ -31,10 +31,29 @@ test_images_x_total = 0
 validation_images_x_total =0
 # ---------------------------------------------------------------------
 
-def load_regression_data(body_part):
+def load_regression_data(body_part: str):
+    '''Load the regression data and images for the 'body_part'.
+
+    Parameters
+    ----------
+    body_part: str
+        The body part to load.
+
+    Returns
+    -------
+    train_images_x: [] cv2 image
+        A list of training images.
+
+    train_y: double
+        The target values of the train_images_x.
+
+    test_images_x: [] cv2 image
+        A list of training images.
+
+    test_y: double
+        The target values of the test_y.
     '''
-    Load the regression data and images for the 'body_part'.
-    '''
+
     global train_images_x_total
     global test_images_x_total
 
@@ -66,26 +85,59 @@ def load_regression_data(body_part):
 
     return (train_images_x, train_y, test_images_x, test_y)
 
-def train_new(body_part):
+def train_new(body_part: str) -> Sequential:
+    '''Create and train a new model for the 'body_part'.
+
+    Parameters
+    ---------
+    body_part: str
+        The body part model to create and train.
+
+    Returns
+    -------
+    model: Sequential
+        A keras model
     '''
-    Create and train a new model for the 'body_part'.
-    '''
+
     model = helper_funcs.create_new_model(True, 0)
     model.compile(optimizer = opt, loss = 'mse')
     return train_regression_model(model, body_part)
 
-def train_old(body_part):
+def train_old(body_part: str) -> Sequential:
+    '''Load and train the 'body_part' model.
+
+    Parameters
+    ----------
+    body_part: str
+        The body part model to load and train.
+
+    Returns
+    -------
+    model: Sequential
+        A keras model
     '''
-    Load and train the 'body_part' model.
-    '''
+
     model = helper_funcs.load_model(body_part)
     model.compile(optimizer = opt, loss = 'mse')
     return train_regression_model(model, body_part)
 
-def train_regression_model(model, body_part):
+def train_regression_model(model: Sequential, body_part: str) -> Sequential:
+    ''' Set up and train the model for the body_part
+
+    Parameters
+    ----------
+    model: Sequential
+        A keras model to train.
+
+    body_part: str
+        The body part model.
+
+    Returns
+    -------
+    model: Sequential
+        A keras model.
     '''
-    Set up and train the model for the body_part
-    '''
+
     train_images_x, train_y, test_images_x, test_y = load_regression_data(body_part)
 
     train_generator = ImageDataGenerator().flow(train_images_x, train_y, batch_size=batch_size)
@@ -149,10 +201,18 @@ def train_regression_model(model, body_part):
 
     return model
 
-def validate(model, body_part):
+def validate(model: Sequential, body_part: str):
+    '''Custom validation process for regression models
+
+    Parameters
+    ----------
+    model: Sequential
+        A keras model.
+
+    body_part: str
+        The body part model.
     '''
-    Custom validation process for regression models
-    '''
+
     global validation_images_x_total
 
     valid_dataset_file = 'dataset/' + 'valid_' + body_part + '.csv'
@@ -178,10 +238,23 @@ def validate(model, body_part):
 
     print("Mean difference: {:.2f}".format(np.abs(mean)))
 
-def predict(image_path, body_part):
+def predict(image_path: str, body_part: str) -> double:
+    '''Predict the abnormality of the image_path.
+
+    Parameters
+    ----------
+    image_path: str
+        The path of the image.
+
+    body_part: str
+        The body part model.
+
+    Returns
+    -------
+    prediction: double
+        The prediction produced by the model.
     '''
-    Predict the abnormality of the image_path.
-    '''
+
     model = helper_funcs.load_model(body_part)
 
     model.compile(optimizer = opt, loss = 'msle')

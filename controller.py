@@ -4,6 +4,11 @@ from view import View
 from PIL import Image, ImageTk
 
 class Controller():
+    '''GUI Controller
+
+    Controlls the View using the Model.
+    '''
+
     def __init__(self):
         print("init controller")
         self.root = tk.Tk()
@@ -26,42 +31,43 @@ class Controller():
         self.root.mainloop()
 
     def upload_images(self, event):
+        '''Load in the images from the user_in folder.
         '''
-        Load in the images from the user_in folder.
-        '''
+
         self.model.upload_files()
         self.display_cur_image()
 
     def display_cur_image(self):
+        '''Display the currently selected image in the view.
         '''
-        Display the currently selected image in the view.
-        '''
+
         self.view.set_image(self.model.image_paths[self.model.current_image])
 
     def display_prev_image(self, event):
-        '''
-        Display the previous image in the view,
+        '''Display the previous image in the view,
         if none then displays the current image.
         '''
+
         self.model.set_prev_image_path()
         self.view.set_image(self.model.image_paths[self.model.current_image])
         print("Previous image clicked, cur image is {}".format(self.model.current_image))
 
     def display_next_image(self, event):
-        '''
-        Display the next image in the view,
+        '''Display the next image in the view,
         if none then display the current image.
         '''
+
         self.model.set_next_image_path()
         self.view.set_image(self.model.image_paths[self.model.current_image])
         print("Next image clicked, cur image is {}".format(self.model.current_image))
 
     def process_image(self, event):
-        '''
-        Process the current image.
+        '''Process the current image.
+
         Classify and then perform the abnormality
         check.
         '''
+
         image_path = self.model.image_paths[self.model.current_image]
 
         class_result = self.model.classify_image(image_path)

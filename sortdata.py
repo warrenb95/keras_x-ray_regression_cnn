@@ -52,6 +52,7 @@ valid_file_name = 'MURA-v1.1/valid_labeled_studies.csv'
 '''
 This is to be used to sort the data for the regression models.
 '''
+
 with open(training_file_name) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=',')
 

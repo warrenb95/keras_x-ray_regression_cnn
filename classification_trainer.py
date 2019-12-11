@@ -22,26 +22,30 @@ classification_test_total = 3197
 # ---------------------------------------------------------------------
 
 def train_new():
+    '''Creates and train a new classification model.
     '''
-    Create and train a new classification model.
-    '''
+
     model = helper_funcs.create_new_model(False, 7)
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     train_classification_model(model)
 
 def train_old():
+    '''Load in the classification model and train it.
     '''
-    Load in the classification model and train it.
-    '''
+
     model = helper_funcs.load_model('class')
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     train_classification_model(model)
 
-def train_classification_model(model):
-    '''
-    Set up and and train the model arg passed in.
+def train_classification_model(model: Sequential):
+    '''Set up and and train the model arg passed in.
+
+    Parameters
+    ----------
+    model: Sequential
+        A keras model to train
     '''
 
     classification_train_generator = ImageDataGenerator().flow_from_directory(train_path,
@@ -82,9 +86,7 @@ def train_classification_model(model):
             helper_funcs.save_model(model, 'class')
 
         except KeyboardInterrupt:
-            '''
-            Handle a keyboard interupts 'ctrl+c'
-            '''
+            # Handle a keyboard interupts 'ctrl+c'
             helper_funcs.save_model(model, 'class')
     else:
         print("----------------- TESTING -----------------")
@@ -96,10 +98,23 @@ def train_classification_model(model):
                             verbose=1,
                             shuffle=True)
 
-def predict_classification(model, image_path):
+def predict_classification(model: Sequential, image_path: str) -> int:
+    '''Predict image classification.
+
+    Parameters
+    ----------
+    model: Sequential
+        Keras model
+
+    image_path: str
+        The path of the image
+
+    Returns
+    -------
+    prediction_y: int
+        The prediction of the model
     '''
-    Predict image_path classification using the passed in model.
-    '''
+
     model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
 
     cur_image = cv2.imread(image_path)
