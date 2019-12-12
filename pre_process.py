@@ -78,28 +78,66 @@ valid_humerus_folder = 'dataset/valid/humerus'
 valid_shoulder_folder = 'dataset/valid/shoulder'
 valid_wrist_folder = 'dataset/valid/wrist'
 
-sources =[train_elbow_folder,
-            train_finger_folder,
-            train_forearm_folder,
-            train_hand_folder,
-            train_humerus_folder,
-            train_shoulder_folder,
-            train_wrist_folder,
-            valid_elbow_folder,
-            valid_finger_folder,
-            valid_forearm_folder,
-            valid_hand_folder,
-            valid_humerus_folder,
-            valid_shoulder_folder,
-            valid_wrist_folder]
+# sources =[train_elbow_folder,
+#             train_finger_folder,
+#             train_forearm_folder,
+#             train_hand_folder,
+#             train_humerus_folder,
+#             train_shoulder_folder,
+#             train_wrist_folder,
+#             valid_elbow_folder,
+#             valid_finger_folder,
+#             valid_forearm_folder,
+#             valid_hand_folder,
+#             valid_humerus_folder,
+#             valid_shoulder_folder,
+#             valid_wrist_folder]
 
-for src in sources:
-    src_files = os.listdir(src)
-    for file_name in src_files:
-        full_file_name = os.path.join(src, file_name)
-        if os.path.isfile(full_file_name):
-            try:
-                # process_image(full_file_name)
-                crop_image(full_file_name)
-            except:
-                print("Cannot process - {}".format(full_file_name))
+# for src in sources:
+#     src_files = os.listdir(src)
+#     for file_name in src_files:
+#         full_file_name = os.path.join(src, file_name)
+#         if os.path.isfile(full_file_name):
+#             try:
+#                 # process_image(full_file_name)
+#                 crop_image(full_file_name)
+#             except:
+#                 print("Cannot process - {}".format(full_file_name))
+
+sources =['dataset/train_elbow.csv',
+            'dataset/train_finger.csv',
+            'dataset/train_forearm.csv',
+            'dataset/train_hand.csv',
+            'dataset/train_humerus.csv',
+            'dataset/train_shoulder.csv',
+            'dataset/train_wrist.csv',
+            'dataset/valid_elbow.csv',
+            'dataset/valid_finger.csv',
+            'dataset/valid_forearm.csv',
+            'dataset/valid_hand.csv',
+            'dataset/valid_humerus.csv',
+            'dataset/valid_shoulder.csv',
+            'dataset/valid_wrist.csv']
+
+def remove_images():
+    for source in sources:
+        print("Processing... {}".format(source))
+        new_csv_lines = []
+        with open(source, 'r') as csv_file:
+            for line in csv_file:
+                copy = True
+
+                file_path = line.split(',')[0]
+
+                # If file does not exist
+                if not os.path.isfile(file_path):
+                    print("Removing... {}".format(file_path))
+                    copy = False
+
+                if copy:
+                    new_csv_lines.append(line)
+
+        with open(source, 'w') as csv_file:
+            csv_file.writelines(new_csv_lines)
+
+remove_images()

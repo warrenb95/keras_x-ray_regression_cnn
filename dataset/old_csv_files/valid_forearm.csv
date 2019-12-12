@@ -15,7 +15,9 @@ dataset/valid/forearm/37484.png,1.0
 dataset/valid/forearm/37485.png,1.0
 dataset/valid/forearm/37486.png,1.0
 dataset/valid/forearm/37487.png,1.0
+dataset/valid/forearm/37488.png,1.0
 dataset/valid/forearm/37489.png,1.0
+dataset/valid/forearm/37490.png,1.0
 dataset/valid/forearm/37491.png,1.0
 dataset/valid/forearm/37492.png,0
 dataset/valid/forearm/37493.png,0
@@ -32,6 +34,7 @@ dataset/valid/forearm/37503.png,1.0
 dataset/valid/forearm/37504.png,1.0
 dataset/valid/forearm/37505.png,1.0
 dataset/valid/forearm/37506.png,1.0
+dataset/valid/forearm/37507.png,1.0
 dataset/valid/forearm/37508.png,1.0
 dataset/valid/forearm/37509.png,1.0
 dataset/valid/forearm/37510.png,1.0
@@ -59,12 +62,17 @@ dataset/valid/forearm/37531.png,1.0
 dataset/valid/forearm/37532.png,1.0
 dataset/valid/forearm/37533.png,1.0
 dataset/valid/forearm/37534.png,1.0
+dataset/valid/forearm/37535.png,1.0
+dataset/valid/forearm/37536.png,1.0
+dataset/valid/forearm/37537.png,1.0
+dataset/valid/forearm/37538.png,1.0
 dataset/valid/forearm/37539.png,1.0
 dataset/valid/forearm/37540.png,1.0
 dataset/valid/forearm/37541.png,1.0
 dataset/valid/forearm/37542.png,1.0
 dataset/valid/forearm/37543.png,0
 dataset/valid/forearm/37544.png,0
+dataset/valid/forearm/37545.png,1.0
 dataset/valid/forearm/37546.png,1.0
 dataset/valid/forearm/37547.png,1.0
 dataset/valid/forearm/37548.png,1.0
@@ -136,6 +144,7 @@ dataset/valid/forearm/37613.png,1.0
 dataset/valid/forearm/37614.png,1.0
 dataset/valid/forearm/37615.png,1.0
 dataset/valid/forearm/37616.png,1.0
+dataset/valid/forearm/37617.png,1.0
 dataset/valid/forearm/37618.png,1.0
 dataset/valid/forearm/37619.png,1.0
 dataset/valid/forearm/37620.png,1.0
@@ -147,6 +156,7 @@ dataset/valid/forearm/37625.png,1.0
 dataset/valid/forearm/37626.png,0
 dataset/valid/forearm/37627.png,0
 dataset/valid/forearm/37628.png,0
+dataset/valid/forearm/37629.png,0
 dataset/valid/forearm/37630.png,0
 dataset/valid/forearm/37631.png,0
 dataset/valid/forearm/37632.png,0
@@ -187,6 +197,7 @@ dataset/valid/forearm/37666.png,0
 dataset/valid/forearm/37667.png,0
 dataset/valid/forearm/37668.png,0
 dataset/valid/forearm/37669.png,0
+dataset/valid/forearm/37670.png,0
 dataset/valid/forearm/37671.png,0
 dataset/valid/forearm/37672.png,0
 dataset/valid/forearm/37673.png,0
@@ -202,6 +213,7 @@ dataset/valid/forearm/37682.png,0
 dataset/valid/forearm/37683.png,0
 dataset/valid/forearm/37684.png,0
 dataset/valid/forearm/37685.png,0
+dataset/valid/forearm/37686.png,0
 dataset/valid/forearm/37687.png,0
 dataset/valid/forearm/37688.png,0
 dataset/valid/forearm/37689.png,0
@@ -212,6 +224,7 @@ dataset/valid/forearm/37693.png,0
 dataset/valid/forearm/37694.png,0
 dataset/valid/forearm/37695.png,0
 dataset/valid/forearm/37696.png,0
+dataset/valid/forearm/37697.png,0
 dataset/valid/forearm/37698.png,0
 dataset/valid/forearm/37699.png,0
 dataset/valid/forearm/37700.png,0
@@ -222,9 +235,11 @@ dataset/valid/forearm/37704.png,0
 dataset/valid/forearm/37705.png,0
 dataset/valid/forearm/37706.png,0
 dataset/valid/forearm/37707.png,0
+dataset/valid/forearm/37708.png,0
 dataset/valid/forearm/37709.png,0
 dataset/valid/forearm/37710.png,0
 dataset/valid/forearm/37711.png,0
+dataset/valid/forearm/37712.png,0
 dataset/valid/forearm/37713.png,0
 dataset/valid/forearm/37714.png,0
 dataset/valid/forearm/37715.png,0
@@ -246,6 +261,7 @@ dataset/valid/forearm/37730.png,0
 dataset/valid/forearm/37731.png,0
 dataset/valid/forearm/37732.png,0
 dataset/valid/forearm/37733.png,0
+dataset/valid/forearm/37734.png,0
 dataset/valid/forearm/37735.png,0
 dataset/valid/forearm/37736.png,0
 dataset/valid/forearm/37737.png,0
@@ -259,11 +275,13 @@ dataset/valid/forearm/37744.png,0
 dataset/valid/forearm/37745.png,0
 dataset/valid/forearm/37746.png,0
 dataset/valid/forearm/37747.png,0
+dataset/valid/forearm/37748.png,0
 dataset/valid/forearm/37749.png,0
 dataset/valid/forearm/37750.png,0
 dataset/valid/forearm/37751.png,0
 dataset/valid/forearm/37752.png,0
 dataset/valid/forearm/37753.png,0
+dataset/valid/forearm/37754.png,0
 dataset/valid/forearm/37755.png,0
 dataset/valid/forearm/37756.png,0
 dataset/valid/forearm/37757.png,0
