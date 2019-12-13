@@ -4,6 +4,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from datetime import datetime
 from matplotlib import pyplot as plt
 import cv2
+import typing
 
 # Settings.
 # ---------------------------------------------------------------------
@@ -39,7 +40,7 @@ def train_old():
 
     train_classification_model(model)
 
-def train_classification_model(model: Sequential):
+def train_classification_model(model):
     '''Set up and and train the model arg passed in.
 
     Parameters
@@ -98,7 +99,7 @@ def train_classification_model(model: Sequential):
                             verbose=1,
                             shuffle=True)
 
-def predict_classification(model: Sequential, image_path: str) -> int:
+def predict_classification(model, image_path):
     '''Predict image classification.
 
     Parameters
