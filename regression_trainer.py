@@ -201,7 +201,7 @@ def train_regression_model(model, body_part):
 
     return model
 
-def validate(model, body_part):
+def validate(body_part):
     '''Custom validation process for regression models
 
     Parameters
@@ -224,19 +224,38 @@ def validate(model, body_part):
 
     validation_images_x_total = len(valid_images_x)
 
+    model = helper_funcs.load_model(body_part)
+    model.compile(optimizer = opt, loss = 'mse')
+
     predict_y = model.predict_generator(ImageDataGenerator().flow(valid_images_x, valid_y, batch_size=batch_size),
                                         verbose=1)
 
     flat_y = predict_y.flatten()
 
-    for i in range(flat_y):
-        if valid_y[i] == 1.0 and flat_y[i] >= 0.6:
-            flat_y[i] = 1.0
+    smallest_normal = 1.0
+    largest_normal = 0.0
+    smallest_abnormal = 1.0
+    largest_abnormal = 0.0
 
-    diff = flat_y - valid_y
-    mean = np.mean(diff)
+    for i in range(len(flat_y)):
+        if valid_y[i] == 1.0:
+            if flat_y[i] < smallest_abnormal:
+                smallest_abnormal = flat_y[i]
+            elif flat_y[i] > largest_abnormal:
+                largest_abnormal = flat_y[i]
 
-    print("Mean difference: {:.2f}".format(np.abs(mean)))
+        if valid_y[i] == 0.0:
+            if flat_y[i] < smallest_normal:
+                smallest_normal = flat_y[i]
+            elif flat_y[i] > largest_normal:
+                largest_normal = flat_y[i]
+
+    print("Smallest Noraml: {}\nLargest Normal: {}\n\nSmallest Abnormal: {}\nLargest Abnormal: {}".format(smallest_normal, largest_normal, smallest_abnormal, largest_abnormal))
+
+    # diff = flat_y - valid_y
+    # mean = np.mean(diff)
+
+    # print("Mean difference: {:.2f}".format(np.abs(mean)))
 
 def predict(image_path, body_part):
     '''Predict the abnormality of the image_path.
