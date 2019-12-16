@@ -21,19 +21,19 @@ if __name__ == "__main__":
     # ---------------------------------------------------------------------
     model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
     for m in model_list:
-        model = regression_trainer.train_old(m)
+        model = regression_trainer.train_new(m)
         model = None
         k_back.clear_session()
     # ---------------------------------------------------------------------
 
     # Uncomment to train classification model
     # ---------------------------------------------------------------------
-    # model = classification_trainer.train_old()
+    model = classification_trainer.train_new()
     # ---------------------------------------------------------------------
 
     # ---------------------------------------------------------------------
     # ---------------------------------------------------------------------
     # This will turn the PC off, use when training overnight
-    os.system("shutdown /s /t 1")
+    # os.system("shutdown /s /t 1")
     # ---------------------------------------------------------------------
     # ---------------------------------------------------------------------

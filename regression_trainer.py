@@ -31,7 +31,7 @@ test_images_x_total = 0
 validation_images_x_total =0
 # ---------------------------------------------------------------------
 
-def load_regression_data(body_part: str):
+def load_regression_data(body_part):
     '''Load the regression data and images for the 'body_part'.
 
     Parameters
@@ -85,7 +85,7 @@ def load_regression_data(body_part: str):
 
     return (train_images_x, train_y, test_images_x, test_y)
 
-def train_new(body_part: str) -> Sequential:
+def train_new(body_part):
     '''Create and train a new model for the 'body_part'.
 
     Parameters
@@ -103,7 +103,7 @@ def train_new(body_part: str) -> Sequential:
     model.compile(optimizer = opt, loss = 'mse')
     return train_regression_model(model, body_part)
 
-def train_old(body_part: str) -> Sequential:
+def train_old(body_part):
     '''Load and train the 'body_part' model.
 
     Parameters
@@ -121,7 +121,7 @@ def train_old(body_part: str) -> Sequential:
     model.compile(optimizer = opt, loss = 'mse')
     return train_regression_model(model, body_part)
 
-def train_regression_model(model: Sequential, body_part: str) -> Sequential:
+def train_regression_model(model, body_part):
     ''' Set up and train the model for the body_part
 
     Parameters
@@ -201,7 +201,7 @@ def train_regression_model(model: Sequential, body_part: str) -> Sequential:
 
     return model
 
-def validate(model: Sequential, body_part: str):
+def validate(model, body_part):
     '''Custom validation process for regression models
 
     Parameters
@@ -238,7 +238,7 @@ def validate(model: Sequential, body_part: str):
 
     print("Mean difference: {:.2f}".format(np.abs(mean)))
 
-def predict(image_path: str, body_part: str) -> double:
+def predict(image_path, body_part):
     '''Predict the abnormality of the image_path.
 
     Parameters
