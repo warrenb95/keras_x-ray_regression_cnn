@@ -257,7 +257,7 @@ def predict(image_path, body_part):
 
     model = helper_funcs.load_model(body_part)
 
-    model.compile(optimizer = opt, loss = 'msle')
+    model.compile(optimizer = opt, loss = 'mse')
 
     cur_image = cv2.imread(image_path)
     cur_image = cv2.resize(cur_image, (112, 112))
