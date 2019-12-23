@@ -99,8 +99,9 @@ def train_new(body_part):
         A keras model
     '''
 
-    model = helper_funcs.create_new_model(True, 0)
-    model.compile(optimizer = opt, loss = 'mse')
+    # model = helper_funcs.create_new_model(True, 0)
+    model = helper_funcs.create_resnet_model()
+    model.compile(optimizer = opt, loss = 'mae', metrics = ['mse'])
     return train_regression_model(model, body_part)
 
 def train_old(body_part):
@@ -118,7 +119,7 @@ def train_old(body_part):
     '''
 
     model = helper_funcs.load_model(body_part)
-    model.compile(optimizer = opt, loss = 'mse')
+    model.compile(optimizer = opt, loss = 'mae', metrics = ['mse'])
     return train_regression_model(model, body_part)
 
 def train_regression_model(model, body_part):

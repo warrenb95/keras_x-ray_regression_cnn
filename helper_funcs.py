@@ -5,6 +5,8 @@ from keras.engine.sequential import Sequential
 from keras.layers.convolutional import Conv2D
 from keras.layers.pooling import MaxPooling2D
 from keras.layers.core import Dense, Dropout, Flatten
+from keras import applications
+from keras.engine.training import Model
 
 def save_model(model: Sequential, model_name: str):
     '''Save the current passed in model as model_name.
@@ -101,6 +103,18 @@ def create_new_model(regression: bool, class_num: int) -> Sequential:
         model.add(Dense(1, activation='linear'))
     else:
         model.add(Dense(class_num, activation='softmax'))
+
+    return model
+
+def create_resnet_model():
+
+    base = applications.ResNet50V2(include_top=False, weights=None, input_shape=(112, 112, 3), pooling='max')
+
+    x = base.output
+    x = Dropout(0.2)(x)
+
+    output = Dense(1, activation='linear')(x)
+    model = Model(inputs=base.input, output=output)
 
     return model
 
