@@ -118,6 +118,15 @@ def create_resnet_model():
 
     return model
 
+def create_desnet121():
+    base = applications.DenseNet121(include_top=False, weights=None, input_shape=(112, 112, 3), pooling='max')
+
+    x = base.output
+    x = Dropout(0.2)(x)
+
+    output = Dense(1, activation='linear')(x)
+    return Model(inputs=base.input, output=output)
+
 def load_dataset_attributes(input_path: str) -> pd.DataFrame:
     '''Load the information from the 'input_path' csv file.
 
