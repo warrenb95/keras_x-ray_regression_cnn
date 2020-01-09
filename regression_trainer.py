@@ -290,6 +290,8 @@ def predict(image_path, body_part):
 
     if prediction < 1:
         prediction = 0.0
+    elif prediction > 100.0:
+        prediction = 100.0
 
     prediction = round(prediction, 1)
 
