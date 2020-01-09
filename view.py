@@ -7,7 +7,7 @@ class View():
 
         self.classification_result_str = "NO_CLASSIFICATION"
 
-        self.regression_result_str = "0.0 - Abnormal"
+        self.regression_result_str = "NO_PREDICTION"
 
         self.file_list = []
 
@@ -73,10 +73,10 @@ class View():
         self.process_btn = tk.Button(self.btn_frame, text = "Process X-Ray", font = "24")
         self.process_btn.grid(row=1, column=0, columnspan=2, sticky=tk.N + tk.E + tk.S + tk.W, padx = 50, pady = 12.5)
 
-    def set_classification_str(self, classification):
+    def set_classification_result(self, classification):
         self.classification_result_str = classification
         self.classification_result_label.configure(text=self.classification_result_str)
 
-    def set_regression_str(self, regress_result):
-        self.regression_result_str = str(regress_result) + " - Abnormal"
+    def set_regression_result(self, regress_result, colour):
+        self.regression_result_str = str(regress_result) + '% Abnormal'
         self.regression_result_label.configure(text=self.regression_result_str)

@@ -284,4 +284,13 @@ def predict(image_path, body_part):
 
     prediction_y = model.predict([[cur_image]])
 
-    return prediction_y[0]
+    prediction = prediction_y[0][0]
+
+    prediction *= 100
+
+    if prediction < 1:
+        prediction = 0.0
+
+    prediction = round(prediction, 1)
+
+    return prediction
