@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # ---------------------------------------------------------------------
     model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
     for m in model_list:
-        model = regression_trainer.train_new(m)
+        model = regression_trainer.train_old(m)
         model = None
         k_back.clear_session()
     # ---------------------------------------------------------------------
