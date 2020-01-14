@@ -72,28 +72,6 @@ class Controller():
 
         class_result = self.model.classify_image(image_path)
 
-        if class_result == 0:
-            self.view.set_classification_result("Class - Elbow")
-            # print("Prediction: {}".format(class_result))
-        elif class_result == 1:
-            self.view.set_classification_result("Class - Finger")
-            # print("Prediction: {}".format(class_result))
-        elif class_result == 2:
-            self.view.set_classification_result("Class - Forearm")
-            # print("Prediction: {}".format(class_result))
-        elif class_result == 3:
-            self.view.set_classification_result("Class - Hand")
-            # print("Prediction: {}".format(class_result))
-        elif class_result == 4:
-            self.view.set_classification_result("Class - Humerus")
-            # print("Prediction: {}".format(class_result))
-        elif class_result == 5:
-            self.view.set_classification_result("Class - Shoulder")
-            # print("Prediction: {}".format(class_result))
-        elif class_result == 6:
-            self.view.set_classification_result("Class - Wrist")
-            # print("Prediction: {}".format(class_result))
-
         regress_result = self.model.predict_abnormality(image_path, class_result)
 
         # print("Prediction is {}".format(regress_result))
@@ -104,12 +82,12 @@ class Controller():
         colour = None
 
         if regress_result <= 25:
-            colour = 'Green'
+            colour = 'green'
         elif regress_result > 25 and regress_result <= 50:
-            colour = 'Yellow'
+            colour = 'yellow'
         elif regress_result > 50 and regress_result <= 75:
-            colour = 'Orange'
+            colour = 'orange'
         elif regress_result > 75:
-            colour = 'Red'
+            colour = 'red'
 
         self.view.set_regression_result(regress_result, colour)
