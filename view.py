@@ -68,3 +68,9 @@ class View():
         self.regression_result_label.configure(text=self.regression_result_str)
 
         self.side_frame.configure(bg=colour)
+
+    def set_loading_txt(self):
+        self.regression_result_str = "Processing prediciton..."
+        self.regression_result_label.configure(text=self.regression_result_str)
+
+        self.side_frame.configure(bg = "white")

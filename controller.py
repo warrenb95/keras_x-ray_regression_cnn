@@ -68,10 +68,10 @@ class Controller():
         check.
         '''
 
+        self.view.set_loading_txt()
+
         image_path = self.model.image_paths[self.model.current_image]
-
         class_result = self.model.classify_image(image_path)
-
         regress_result = self.model.predict_abnormality(image_path, class_result)
 
         # print("Prediction is {}".format(regress_result))
