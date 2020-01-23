@@ -23,7 +23,7 @@ class Controller():
         self.view.prev_btn.bind("<Button-1>", self.display_prev_image)
         self.view.next_btn.bind("<Button-1>", self.display_next_image)
 
-        self.view.process_btn.bind("<Button-1>", self.process_image)
+        self.view.process_btn.bind("<Button-1>", self.handlePrediction)
 
     def run(self):
         self.root.title("X-Ray Processor")
@@ -61,18 +61,22 @@ class Controller():
         self.view.set_image(self.model.image_paths[self.model.current_image])
         print("Next image clicked, cur image is {}".format(self.model.current_image))
 
-    def process_image(self, event):
+    def handlePrediction(self, event):
+        '''Handle prediction in the GUI and then process the image.
+        '''
+        self.view.set_loading_txt()
+        self.process_image()
+
+    def process_image(self):
         '''Process the current image.
 
         Classify and then perform the abnormality
         check.
         '''
 
-        self.view.set_loading_txt()
-
         image_path = self.model.image_paths[self.model.current_image]
-        class_result = self.model.classify_image(image_path)
-        regress_result = self.model.predict_abnormality(image_path, class_result)
+
+        regress_result = self.model.predict_abnormality(image_path)
 
         # print("Prediction is {}".format(regress_result))
 

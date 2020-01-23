@@ -4,19 +4,20 @@ class View():
 
     def __init__(self, root):
         print("init view")
+        self.root = root
 
         self.regression_result_str = ""
 
         self.file_list = []
 
-        self.make_image_frame(root)
-        self.make_side_frame(root)
+        self.make_image_frame()
+        self.make_side_frame()
         self.add_tmp_img()
 
-    def make_image_frame(self, root):
-        root.update()
+    def make_image_frame(self):
+        self.root.update()
 
-        self.image_canvas = tk.Canvas(root, width = root.winfo_width() * 0.60, height = root.winfo_height())
+        self.image_canvas = tk.Canvas(self.root, width = self.root.winfo_width() * 0.60, height = self.root.winfo_height())
         self.image_canvas.pack(side = tk.LEFT)
 
     def add_tmp_img(self):
@@ -29,9 +30,9 @@ class View():
 
         self.set_regression_result("", "white")
 
-    def make_side_frame(self, root):
-        root.update()
-        self.side_frame = tk.Frame(root, width = root.winfo_width() * 0.40, height = root.winfo_height(), bg = "white")
+    def make_side_frame(self):
+        self.root.update()
+        self.side_frame = tk.Frame(self.root, width = self.root.winfo_width() * 0.40, height = self.root.winfo_height(), bg = "white")
         self.side_frame.pack(side = tk.LEFT, fill = tk.BOTH, expand = True)
 
         self.regression_result_label = tk.Label(self.side_frame, text = self.regression_result_str, font = "20 20", fg = "#ff5c33", borderwidth = 2, relief = "solid")
@@ -39,10 +40,10 @@ class View():
 
         self.make_btn_frame(self.side_frame)
 
-    def make_btn_frame(self, root):
-        root.update()
+    def make_btn_frame(self, side_frame):
+        self.root.update()
 
-        self.btn_frame = tk.Frame(root, width = root.winfo_width(), height = root.winfo_height() * 0.3, bg = "grey")
+        self.btn_frame = tk.Frame(side_frame, width = side_frame.winfo_width(), height = side_frame.winfo_height() * 0.3, bg = "grey")
         self.btn_frame.pack(fill = tk.X, padx = 10, pady = 10, side=tk.BOTTOM)
 
         self.add_btn = tk.Button(self.btn_frame, height = 2, text = "Add Radiograph(s)", font = "10", bg = "#70db70")
@@ -70,7 +71,9 @@ class View():
         self.side_frame.configure(bg=colour)
 
     def set_loading_txt(self):
-        self.regression_result_str = "Processing prediciton..."
+        self.regression_result_str = "Processing radiograph(x-ray)..."
         self.regression_result_label.configure(text=self.regression_result_str)
 
         self.side_frame.configure(bg = "white")
+
+        self.root.update()
