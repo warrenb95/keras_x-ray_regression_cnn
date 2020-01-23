@@ -41,11 +41,10 @@ class Model():
         if self.current_image + 1 < len(self.image_paths):
             self.current_image += 1
 
-    def classify_image(self, image_path):
+    def predict_abnormality(self, image_path):
         class_model = helper_funcs.load_model("class")
-        return classification_trainer.predict_classification(class_model, image_path)
+        class_result = classification_trainer.predict_classification(class_model, image_path)
 
-    def predict_abnormality(self, image_path, class_result):
         if class_result == 0:
             return regression_trainer.predict(image_path, 'elbow')
         elif class_result == 1:
