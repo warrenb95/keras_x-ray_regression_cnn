@@ -11,7 +11,7 @@ if __name__ == "__main__":
     # model = regression_trainer.train_new('elbow')
     # ---------------------------------------------------------------------
 
-    # Uncomment to run the GUI
+    # Uncomment to run the GUI Application
     # ---------------------------------------------------------------------
     controller = Controller()
     controller.run()
