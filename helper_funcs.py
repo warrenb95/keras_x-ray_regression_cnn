@@ -1,6 +1,6 @@
 import pandas as pd
 import cv2
-from keras.engine.saving import model_from_json
+from keras.models import model_from_json
 from keras.engine.sequential import Sequential
 from keras.layers.convolutional import Conv2D
 from keras.layers.pooling import MaxPooling2D
