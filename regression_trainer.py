@@ -251,7 +251,7 @@ def validate(body_part):
             elif flat_y[i] > largest_normal:
                 largest_normal = flat_y[i]
 
-    print("Smallest Noraml: {}\nLargest Normal: {}\n\nSmallest Abnormal: {}\nLargest Abnormal: {}".format(smallest_normal, largest_normal, smallest_abnormal, largest_abnormal))
+    print("Smallest Normal: {}\nLargest Normal: {}\n\nSmallest Abnormal: {}\nLargest Abnormal: {}".format(smallest_normal, largest_normal, smallest_abnormal, largest_abnormal))
 
     # diff = flat_y - valid_y
     # mean = np.mean(diff)
