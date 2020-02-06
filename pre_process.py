@@ -140,4 +140,40 @@ def remove_images():
         with open(source, 'w') as csv_file:
             csv_file.writelines(new_csv_lines)
 
-remove_images()
+def find_balance():
+    balance_dict = {}
+    for source in sources:
+        normal_count = 0
+        abnormal_count = 0
+        count = 0
+        print(f'Processing {source}...')
+        with open(source, 'r') as csv_file:
+            for line in csv_file.readlines():
+                classification = line.split(',')[1].strip()
+                if classification == '1.0':
+                    abnormal_count += 1
+                elif classification == '0':
+                    normal_count += 1
+
+        balance_dict[source] = [normal_count, abnormal_count]
+
+    return balance_dict
+
+def balance_dataset(balance_dict):
+    for key, value in balance_dict.items():
+        normal_count = 0
+        abnormal_count = 0
+        min_count = min(value)
+        print("Processing... {}".format(key))
+        new_csv_lines = []
+        with open(key, 'r') as csv_file:
+            for line in csv_file:
+                classification = line.split(',')[1].strip()
+                # If file does not exist
+                if classification > min_count:
+                    print("Removing... {}".format(value[0]))
+                else:
+                    new_csv_lines.append(line)
+
+        with open(key, 'w') as csv_file:
+            csv_file.writelines(new_csv_lines)
