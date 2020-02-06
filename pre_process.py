@@ -159,7 +159,9 @@ def find_balance():
 
     return balance_dict
 
-def balance_dataset(balance_dict):
+def balance_dataset():
+    balance_dict = find_balance()
+
     for key, value in balance_dict.items():
         normal_count = 0
         abnormal_count = 0
@@ -172,9 +174,13 @@ def balance_dataset(balance_dict):
                 if classification == '1.0':
                     if abnormal_count <= min_count:
                         new_csv_lines.append(line)
+                        abnormal_count += 1
                 else:
                     if normal_count <= min_count:
                         new_csv_lines.append(line)
+                        normal_count += 1
 
         with open(key, 'w') as csv_file:
             csv_file.writelines(new_csv_lines)
+
+balance_dataset()
