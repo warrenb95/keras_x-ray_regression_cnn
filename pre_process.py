@@ -169,11 +169,12 @@ def balance_dataset(balance_dict):
         with open(key, 'r') as csv_file:
             for line in csv_file:
                 classification = line.split(',')[1].strip()
-                # If file does not exist
-                if classification > min_count:
-                    print("Removing... {}".format(value[0]))
+                if classification == '1.0':
+                    if abnormal_count <= min_count:
+                        new_csv_lines.append(line)
                 else:
-                    new_csv_lines.append(line)
+                    if normal_count <= min_count:
+                        new_csv_lines.append(line)
 
         with open(key, 'w') as csv_file:
             csv_file.writelines(new_csv_lines)
