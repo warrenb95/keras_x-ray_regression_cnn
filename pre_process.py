@@ -61,39 +61,22 @@ def crop_image(path):
     cur_image = cv2.resize(cur_image, (112, 112))
     cv2.imwrite(path, cur_image)
 
+folder_sources =['dataset/train/elbow',
+            'dataset/train/finger',
+            'dataset/train/forearm',
+            'dataset/train/hand',
+            'dataset/train/humerus',
+            'dataset/train/shoulder',
+            'dataset/train/wrist',
+            'dataset/valid/elbow',
+            'dataset/valid/finger',
+            'dataset/valid/forearm',
+            'dataset/valid/hand',
+            'dataset/valid/humerus',
+            'dataset/valid/shoulder',
+            'dataset/valid/wrist']
 
-train_elbow_folder = 'dataset/train/elbow'
-train_finger_folder = 'dataset/train/finger'
-train_forearm_folder = 'dataset/train/forearm'
-train_hand_folder = 'dataset/train/hand'
-train_humerus_folder = 'dataset/train/humerus'
-train_shoulder_folder = 'dataset/train/shoulder'
-train_wrist_folder = 'dataset/train/wrist'
-
-valid_elbow_folder = 'dataset/valid/elbow'
-valid_finger_folder = 'dataset/valid/finger'
-valid_forearm_folder = 'dataset/valid/forearm'
-valid_hand_folder = 'dataset/valid/hand'
-valid_humerus_folder = 'dataset/valid/humerus'
-valid_shoulder_folder = 'dataset/valid/shoulder'
-valid_wrist_folder = 'dataset/valid/wrist'
-
-# sources =[train_elbow_folder,
-#             train_finger_folder,
-#             train_forearm_folder,
-#             train_hand_folder,
-#             train_humerus_folder,
-#             train_shoulder_folder,
-#             train_wrist_folder,
-#             valid_elbow_folder,
-#             valid_finger_folder,
-#             valid_forearm_folder,
-#             valid_hand_folder,
-#             valid_humerus_folder,
-#             valid_shoulder_folder,
-#             valid_wrist_folder]
-
-# for src in sources:
+# for src in folder_sources:
 #     src_files = os.listdir(src)
 #     for file_name in src_files:
 #         full_file_name = os.path.join(src, file_name)
@@ -104,7 +87,7 @@ valid_wrist_folder = 'dataset/valid/wrist'
 #             except:
 #                 print("Cannot process - {}".format(full_file_name))
 
-sources =['dataset/train_elbow.csv',
+csv_sources =['dataset/train_elbow.csv',
             'dataset/train_finger.csv',
             'dataset/train_forearm.csv',
             'dataset/train_hand.csv',
@@ -120,7 +103,7 @@ sources =['dataset/train_elbow.csv',
             'dataset/valid_wrist.csv']
 
 def remove_images():
-    for source in sources:
+    for source in csv_sources:
         print("Processing... {}".format(source))
         new_csv_lines = []
         with open(source, 'r') as csv_file:
@@ -182,5 +165,3 @@ def balance_dataset():
 
         with open(key, 'w') as csv_file:
             csv_file.writelines(new_csv_lines)
-
-balance_dataset()
