@@ -114,7 +114,7 @@ def create_resnet_model():
     x = Dropout(0.2)(x)
 
     output = Dense(1, activation='linear')(x)
-    model = Model(inputs=base.input, output=output)
+    model = Model(inputs=base.input, outputs=output)
 
     return model
 
@@ -125,7 +125,7 @@ def create_desnet121():
     x = Dropout(0.2)(x)
 
     output = Dense(1, activation='linear')(x)
-    return Model(inputs=base.input, output=output)
+    return Model(inputs=base.input, outputs=output)
 
 def load_dataset_attributes(input_path: str) -> pd.DataFrame:
     '''Load the information from the 'input_path' csv file.
