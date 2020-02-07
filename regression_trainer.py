@@ -101,7 +101,7 @@ def train_new(body_part):
 
     # model = helper_funcs.create_new_model(True, 0)
     model = helper_funcs.create_desnet121()
-    model.compile(optimizer = opt, loss = 'mae', metrics = ['mse'])
+    model.compile(optimizer = opt, loss = 'mse')
     return train_regression_model(model, body_part)
 
 def train_old(body_part):
@@ -119,7 +119,7 @@ def train_old(body_part):
     '''
 
     model = helper_funcs.load_model(body_part)
-    model.compile(optimizer = opt, loss = 'mae', metrics = ['mse'])
+    model.compile(optimizer = opt, loss = 'mse')
     return train_regression_model(model, body_part)
 
 def train_regression_model(model, body_part):
