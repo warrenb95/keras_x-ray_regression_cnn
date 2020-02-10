@@ -108,7 +108,7 @@ def create_new_model(regression: bool, class_num: int) -> Sequential:
 
 def create_resnet_model():
 
-    base = applications.ResNet50V2(include_top=False, weights=None, input_shape=(112, 112, 3), pooling='max')
+    base = applications.ResNet152V2(include_top=False, weights=None, input_shape=(112, 112, 3), pooling='max')
 
     x = base.output
     x = Dropout(0.2)(x)
