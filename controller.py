@@ -2,6 +2,7 @@ import tkinter as tk
 from model import Model
 from view import View
 from PIL import Image, ImageTk
+import concurrent.futures
 
 class Controller():
     '''GUI Controller
@@ -67,6 +68,7 @@ class Controller():
         self.view.set_loading_txt()
         self.process_image()
 
+
     def process_image(self):
         '''Process the current image.
 
@@ -75,6 +77,10 @@ class Controller():
         '''
 
         image_path = self.model.image_paths[self.model.current_image]
+
+        # with concurrent.futures.ThreadPoolExecutor() as executor:
+        #     future = executor.submit(self.model.predict_abnormality, image_path)
+        #     regress_result = future.result()
 
         regress_result = self.model.predict_abnormality(image_path)
 
