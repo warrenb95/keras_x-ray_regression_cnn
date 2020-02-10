@@ -1,12 +1,15 @@
 import pandas as pd
 import cv2
-from keras.models import model_from_json
+from tensorflow.keras.models import model_from_json
 from keras.engine.sequential import Sequential
 from keras.layers.convolutional import Conv2D
 from keras.layers.pooling import MaxPooling2D
 from keras.layers.core import Dense, Dropout, Flatten
 from keras import applications
 from keras.engine.training import Model
+
+import keras.backend.tensorflow_backend as tb
+tb._SYMBOLIC_SCOPE.value = True
 
 def save_model(model: Sequential, model_name: str):
     '''Save the current passed in model as model_name.

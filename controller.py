@@ -78,11 +78,11 @@ class Controller():
 
         image_path = self.model.image_paths[self.model.current_image]
 
-        # with concurrent.futures.ThreadPoolExecutor() as executor:
-        #     future = executor.submit(self.model.predict_abnormality, image_path)
-        #     regress_result = future.result()
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future = executor.submit(self.model.predict_abnormality, image_path)
+            regress_result = future.result()
 
-        regress_result = self.model.predict_abnormality(image_path)
+        # regress_result = self.model.predict_abnormality(image_path)
 
         # print("Prediction is {}".format(regress_result))
 
