@@ -114,7 +114,15 @@ def create_resnet_model():
     base = applications.ResNet152V2(include_top=False, weights=None, input_shape=(112, 112, 3), pooling='max')
 
     x = base.output
-    x = Dropout(0.2)(x)
+    x = Dropout(0.4)(x)
+    x = Dense(2048, activation='relu')(x)
+    x = Dense(2048, activation='relu')(x)
+    x = Dense(1024, activation='relu')(x)
+    x = Dense(1024, activation='relu')(x)
+    x = Dense(512, activation='relu')(x)
+    x = Dense(512, activation='relu')(x)
+    x = Dense(256, activation='relu')(x)
+    x = Dense(256, activation='relu')(x)
 
     output = Dense(1, activation='linear')(x)
     model = Model(inputs=base.input, outputs=output)
