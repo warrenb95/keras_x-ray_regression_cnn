@@ -19,11 +19,11 @@ if __name__ == "__main__":
 
     # Uncomment to train the regression models
     # ---------------------------------------------------------------------
-    model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
-    for m in model_list:
-        model = regression_trainer.train_new(m)
-        model = None
-        k_back.clear_session()
+    # model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
+    # for m in model_list:
+    #     model = regression_trainer.train_new(m)
+    #     model = None
+    #     k_back.clear_session()
     # ---------------------------------------------------------------------
 
     # Uncomment to train classification model
@@ -39,5 +39,7 @@ if __name__ == "__main__":
     # ---------------------------------------------------------------------
     # This will turn the PC off, use when training overnight
     # os.system("shutdown /s /t 1")
+    # This will sleep the PC
+    os.system("rundll32.exe powrprof.dll,SetSuspendState 0,1,0")
     # ---------------------------------------------------------------------
     # ---------------------------------------------------------------------
