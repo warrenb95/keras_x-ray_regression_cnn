@@ -19,11 +19,11 @@ if __name__ == "__main__":
 
     # Uncomment to train the regression models
     # ---------------------------------------------------------------------
-    # model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
-    # for m in model_list:
-    #     model = regression_trainer.train_new(m)
-    #     model = None
-    #     k_back.clear_session()
+    model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
+    for m in model_list:
+        model = regression_trainer.train_new(m)
+        model = None
+        k_back.clear_session()
     # ---------------------------------------------------------------------
 
     # Uncomment to train classification model
