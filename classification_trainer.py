@@ -116,11 +116,10 @@ def predict_classification(model, image_path):
         The prediction of the model
     '''
 
-    model.compile(loss='categorical_crossentropy', optimizer=opt, metrics=['accuracy'])
+    model.compile(loss = 'categorical_crossentropy', optimizer = opt, metrics = ['accuracy'])
 
-    cur_image = cv2.imread(image_path)
-    cur_image = cv2.resize(cur_image, (112, 112))
+    cur_image = helper_funcs.load_single_image(image_path)
 
-    prediction_y = model.predict_classes([[cur_image]])
+    prediction_y = model.predict_classes(cur_image)
 
-    return prediction_y[0]
+    return prediction_y, cur_image

@@ -1,5 +1,6 @@
 import pandas as pd
-import cv2
+import numpy as np
+from PIL import Image
 from tensorflow.keras.models import model_from_json
 from keras.engine.sequential import Sequential
 from keras.layers.convolutional import Conv2D
@@ -172,11 +173,19 @@ def load_images(df: pd.DataFrame):
 
     for path in df['path']:
         try:
-            cur_image = cv2.imread(path)
+            # cur_image = cv2.imread(path)
+            np_image = Image.open(path)
+            np_image = np.expand_dims(np_image, axis = 0)
         except:
             print("Error: {}, not loaded".format(path))
             exit()
 
-        images.append(cur_image)
+        images.append(np_image)
 
     return images
+
+def load_single_image(path):
+    np_image = Image.open(path)
+    np_image = np.expand_dims(np_image, axis = 0)
+
+    return np_image

@@ -43,22 +43,22 @@ class Model():
 
     def predict_abnormality(self, image_path):
         class_model = helper_funcs.load_model("class")
-        class_result = classification_trainer.predict_classification(class_model, image_path)
+        class_result, cur_image = classification_trainer.predict_classification(class_model, image_path)
 
         if class_result == 0:
-            return regression_trainer.predict(image_path, 'elbow')
+            return regression_trainer.predict(cur_image, 'elbow')
         elif class_result == 1:
-            return regression_trainer.predict(image_path, 'finger')
+            return regression_trainer.predict(cur_image, 'finger')
         elif class_result == 2:
-            return regression_trainer.predict(image_path, 'forearm')
+            return regression_trainer.predict(cur_image, 'forearm')
         elif class_result == 3:
-            return regression_trainer.predict(image_path, 'hand')
+            return regression_trainer.predict(cur_image, 'hand')
         elif class_result == 4:
-            return regression_trainer.predict(image_path, 'humerus')
+            return regression_trainer.predict(cur_image, 'humerus')
         elif class_result == 5:
-            return regression_trainer.predict(image_path, 'shoulder')
+            return regression_trainer.predict(cur_image, 'shoulder')
         elif class_result == 6:
-            return regression_trainer.predict(image_path, 'wrist')
+            return regression_trainer.predict(cur_image, 'wrist')
         else:
             print('Invalid class_result {}'.format(class_result))
             return None

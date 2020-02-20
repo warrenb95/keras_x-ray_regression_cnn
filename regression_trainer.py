@@ -258,7 +258,7 @@ def validate(body_part):
 
     # print("Mean difference: {:.2f}".format(np.abs(mean)))
 
-def predict(image_path, body_part):
+def predict(cur_image, body_part):
     '''Predict the abnormality of the image_path.
 
     Parameters
@@ -279,10 +279,7 @@ def predict(image_path, body_part):
 
     model.compile(optimizer = opt, loss = 'mse')
 
-    cur_image = cv2.imread(image_path)
-    cur_image = cv2.resize(cur_image, (112, 112))
-
-    prediction_y = model.predict([[cur_image]])
+    prediction_y = model.predict(cur_image)
 
     prediction = prediction_y[0][0]
 
