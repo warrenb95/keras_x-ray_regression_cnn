@@ -1,7 +1,7 @@
 import os
 import helper_funcs
-import classification_trainer
-import regression_trainer
+import classification_trainer as ct
+import regression_trainer as rt
 
 class Model():
 
@@ -9,6 +9,8 @@ class Model():
         print("init model")
         self.current_image = 0
         self.user_in_path = os.path.dirname(os.path.abspath(__file__)) + "/user_in"
+        self.class_trainer = ct.Classification_Trainer().getInstance()
+        self.regres_trainer = rt.Regression_Trainer().getInstance()
 
     def add_files(self, event):
         '''Opens file explorer at 'user_in_path'.
@@ -42,23 +44,22 @@ class Model():
             self.current_image += 1
 
     def predict_abnormality(self, image_path):
-        class_model = helper_funcs.load_model("class")
-        class_result, cur_image = classification_trainer.predict_classification(class_model, image_path)
+        class_result, cur_image = self.class_trainer.predict_classification(image_path)
 
         if class_result == 0:
-            return regression_trainer.predict(cur_image, 'elbow')
+            return self.regres_trainer.predict(cur_image, 'elbow')
         elif class_result == 1:
-            return regression_trainer.predict(cur_image, 'finger')
+            return self.regres_trainer.predict(cur_image, 'finger')
         elif class_result == 2:
-            return regression_trainer.predict(cur_image, 'forearm')
+            return self.regres_trainer.predict(cur_image, 'forearm')
         elif class_result == 3:
-            return regression_trainer.predict(cur_image, 'hand')
+            return self.regres_trainer.predict(cur_image, 'hand')
         elif class_result == 4:
-            return regression_trainer.predict(cur_image, 'humerus')
+            return self.regres_trainer.predict(cur_image, 'humerus')
         elif class_result == 5:
-            return regression_trainer.predict(cur_image, 'shoulder')
+            return self.regres_trainer.predict(cur_image, 'shoulder')
         elif class_result == 6:
-            return regression_trainer.predict(cur_image, 'wrist')
+            return self.regres_trainer.predict(cur_image, 'wrist')
         else:
             print('Invalid class_result {}'.format(class_result))
             return None
