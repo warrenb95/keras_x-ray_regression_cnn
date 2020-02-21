@@ -8,6 +8,7 @@ from keras.layers.pooling import MaxPooling2D
 from keras.layers.core import Dense, Dropout, Flatten
 from keras import applications
 from keras.engine.training import Model
+import cv2
 
 import keras.backend.tensorflow_backend as tb
 tb._SYMBOLIC_SCOPE.value = True
@@ -25,11 +26,11 @@ def save_model(model: Sequential, model_name: str, model_num: str):
     '''
 
     model_json = model.to_json()
-    with open("models/" + model_name + model_num + ".json", "w") as json_file:
+    with open("models/" + model_name + '-' + str(model_num) + ".json", "w") as json_file:
         json_file.write(model_json)
 
-    model.save_weights("models/" + model_name + model_num +".h5")
-    print("Saved %s to disk" % (model_name + model_num))
+    model.save_weights("models/" + model_name + '-' + str(model_num) +".h5")
+    print("Saved %s to disk" % (model_name + '-' + str(model_num)))
 
 def load_model(model_name: str) -> Sequential:
     '''Load in model_name and return Sequential.
@@ -112,7 +113,7 @@ def create_new_model(regression: bool, class_num: int) -> Sequential:
 
 def create_resnet_model():
 
-    base = applications.ResNet152V2(include_top=False, weights=None, input_shape=(112, 112, 3), pooling='max')
+    base = applications.ResNet152V2(include_top = False, weights = None, input_shape = (112, 112, 3), pooling = 'max')
 
     x = base.output
     x = Dropout(0.4)(x)
@@ -131,7 +132,7 @@ def create_resnet_model():
     return model
 
 def create_desnet121():
-    base = applications.DenseNet121(include_top=False, weights=None, input_shape=(112, 112, 3), pooling='max')
+    base = applications.DenseNet121(include_top = False, weights = None, input_shape = (112, 112, 3), pooling = 'max')
 
     x = base.output
     x = Dropout(0.2)(x)
@@ -173,16 +174,14 @@ def load_images(df: pd.DataFrame):
 
     for path in df['path']:
         try:
-            # cur_image = cv2.imread(path)
-            np_image = Image.open(path)
-            np_image = np.expand_dims(np_image, axis = 0)
+            cur_image = cv2.imread(path)
         except:
             print("Error: {}, not loaded".format(path))
             exit()
 
-        images.append(np_image)
+        images.append(cur_image)
 
-    return images
+    return np.array(images)
 
 def load_single_image(path):
     np_image = Image.open(path)

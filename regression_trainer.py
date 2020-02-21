@@ -80,8 +80,8 @@ class Regression_Trainer:
             train_images_x = np.array(train_images_x)
             test_images_x = np.array(test_images_x)
 
-            train_y = np.array(train_attribs_x['target'])
-            test_y = np.array(test_attribs_x['target'])
+            train_y = train_attribs_x['target']
+            test_y = test_attribs_x['target']
 
             self.train_images_x_total = len(train_images_x)
             self.test_images_x_total = len(test_images_x)
