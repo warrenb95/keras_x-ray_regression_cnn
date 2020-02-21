@@ -24,7 +24,7 @@ class Controller():
         self.view.prev_btn.bind("<Button-1>", self.display_prev_image)
         self.view.next_btn.bind("<Button-1>", self.display_next_image)
 
-        self.view.process_btn.bind("<Button-1>", self.handlePrediction)
+        self.view.process_btn.bind("<Button-1>", self.handle_prediction)
 
     def run(self):
         self.root.title("X-Ray Processor")
@@ -62,7 +62,7 @@ class Controller():
         self.view.set_image(self.model.image_paths[self.model.current_image])
         print("Next image clicked, cur image is {}".format(self.model.current_image))
 
-    def handlePrediction(self, event):
+    def handle_prediction(self, event):
         '''Handle prediction in the GUI and then process the image.
         '''
         self.view.set_loading_txt()

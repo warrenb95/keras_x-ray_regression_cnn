@@ -125,7 +125,7 @@ def remove_images():
 
 def find_balance():
     balance_dict = {}
-    for source in sources:
+    for source in csv_sources:
         normal_count = 0
         abnormal_count = 0
         count = 0
