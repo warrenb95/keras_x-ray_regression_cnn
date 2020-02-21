@@ -23,7 +23,7 @@ if __name__ == "__main__":
     # ---------------------------------------------------------------------
     trainer = regression_trainer.Regression_Trainer().getInstance()
     model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
-    amount_of_models = 9
+    amount_of_models = 10
     for m in model_list:
         trainer.train_new(m, amount_of_models)
         k_back.clear_session()
