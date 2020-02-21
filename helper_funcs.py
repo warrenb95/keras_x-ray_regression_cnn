@@ -12,7 +12,7 @@ from keras.engine.training import Model
 import keras.backend.tensorflow_backend as tb
 tb._SYMBOLIC_SCOPE.value = True
 
-def save_model(model: Sequential, model_name: str):
+def save_model(model: Sequential, model_name: str, model_num: str):
     '''Save the current passed in model as model_name.
 
     Parameters
@@ -25,11 +25,11 @@ def save_model(model: Sequential, model_name: str):
     '''
 
     model_json = model.to_json()
-    with open("models/" + model_name + ".json", "w") as json_file:
+    with open("models/" + model_name + model_num + ".json", "w") as json_file:
         json_file.write(model_json)
 
-    model.save_weights("models/" + model_name + ".h5")
-    print("Saved %s to disk" % model_name)
+    model.save_weights("models/" + model_name + model_num +".h5")
+    print("Saved %s to disk" % (model_name + model_num))
 
 def load_model(model_name: str) -> Sequential:
     '''Load in model_name and return Sequential.

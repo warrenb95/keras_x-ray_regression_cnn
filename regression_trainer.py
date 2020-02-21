@@ -18,7 +18,6 @@ class Regression_Trainer:
     class __Regression_Trainer:
 
         def __init__(self):
-            self.model = None
             self.trainer = None
 
             # Settings
@@ -37,12 +36,6 @@ class Regression_Trainer:
             self.test_images_x_total = 0
             self.validation_images_x_total = 0
             # ---------------------------------------------------------------------
-
-        def getInstance(self):
-            if self.trainer is None:
-                self.trainer = Regression_Trainer()
-
-            return self.trainer
 
         def load_regression_data(self, body_part):
             '''Load the regression data and images for the 'body_part'.
@@ -95,7 +88,7 @@ class Regression_Trainer:
 
             return (train_images_x, train_y, test_images_x, test_y)
 
-        def train_new(self, body_part):
+        def train_new(self, body_part, amount_of_models):
             '''Create and train a new model for the 'body_part'.
 
             Parameters
@@ -110,9 +103,10 @@ class Regression_Trainer:
             '''
 
             # model = helper_funcs.create_new_model(True, 0)
-            model = helper_funcs.create_desnet121()
-            model.compile(optimizer = self.opt, loss = 'mse')
-            return train_regression_model(model, body_part)
+            for model_num in range(amount_of_models):
+                self.model = helper_funcs.create_desnet121()
+                self.model.compile(optimizer = self.opt, loss = 'mse')
+                self.train_regression_model(body_part, model_num)
 
         def train_old(self, body_part):
             '''Load and train the 'body_part' model.
@@ -130,9 +124,9 @@ class Regression_Trainer:
 
             self.model = helper_funcs.load_model(body_part)
             self.model.compile(optimizer = self.opt, loss = 'mse')
-            return train_regression_model(body_part)
+            self.train_regression_model(body_part)
 
-        def train_regression_model(self, body_part):
+        def train_regression_model(self, body_part, model_num):
             ''' Set up and train the model for the body_part
 
             Parameters
@@ -149,7 +143,7 @@ class Regression_Trainer:
                 A keras model.
             '''
 
-            train_images_x, train_y, test_images_x, test_y = load_regression_data(body_part)
+            train_images_x, train_y, test_images_x, test_y = self.load_regression_data(body_part)
 
             train_generator = ImageDataGenerator().flow(train_images_x, train_y, batch_size = self.batch_size)
             test_generator = ImageDataGenerator().flow(test_images_x, test_y, batch_size = self.batch_size)
@@ -176,17 +170,17 @@ class Regression_Trainer:
                     plt.xlabel('Epoch')
                     plt.legend(['loss', 'val_loss'], loc='upper left')
 
-                    fname = "model_graphs/" + curr_datetime + '_' + body_part + '.jpg'
+                    fname = "model_graphs/" + curr_datetime + '_' + body_part + model_num +'.jpg'
                     plt.savefig(fname)
                     plt.close()
                     history = None
 
-                    helper_funcs.save_model(model, body_part)
+                    helper_funcs.save_model(self.model, body_part, model_num)
 
                 except KeyboardInterrupt:
-                    helper_funcs.save_model(model, body_part)
+                    helper_funcs.save_model(self.model, body_part, model_num)
                 else:
-                    helper_funcs.save_model(model, body_part)
+                    helper_funcs.save_model(self.model, body_part, model_num)
             else:
                 print("----------------- self.TESTING -----------------")
                 history = self.model.fit_generator(train_generator,
