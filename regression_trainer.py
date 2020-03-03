@@ -170,7 +170,7 @@ class Regression_Trainer:
                     plt.xlabel('Epoch')
                     plt.legend(['loss', 'val_loss'], loc='upper left')
 
-                    fname = "model_graphs/" + curr_datetime + '_' + body_part + model_num +'.jpg'
+                    fname = "model_graphs/" + curr_datetime + '_' + body_part + str(model_num) +'.jpg'
                     plt.savefig(fname)
                     plt.close()
                     history = None
