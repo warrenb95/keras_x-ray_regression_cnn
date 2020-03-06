@@ -76,10 +76,12 @@ class Controller():
         check.
         '''
 
+        model_count = 5
+
         image_path = self.model.image_paths[self.model.current_image]
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(self.model.predict_abnormality, image_path)
+            future = executor.submit(self.model.predict_abnormality, image_path, model_count)
             regress_result = future.result()
 
         # regress_result = self.model.predict_abnormality(image_path)

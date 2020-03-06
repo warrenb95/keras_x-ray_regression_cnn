@@ -1,6 +1,7 @@
 import settings
 import helper_funcs
 from keras.preprocessing.image import ImageDataGenerator
+import keras.backend as K
 from datetime import datetime
 from matplotlib import pyplot as plt
 
@@ -10,9 +11,8 @@ import numpy as np
 import cv2
 
 from datetime import datetime
+import time
 
-import helper_funcs
-import settings
 
 class Regression_Trainer:
     class __Regression_Trainer:
@@ -204,7 +204,7 @@ class Regression_Trainer:
                 plt.close()
                 history = None
 
-        def predict(self, cur_image, body_part):
+        def predict(self, cur_image, body_part, model_num):
             '''Predict the abnormality of the image_path.
 
             Parameters
@@ -220,25 +220,42 @@ class Regression_Trainer:
             prediction: double
                 The prediction produced by the model.
             '''
+            prediction_list = []
 
-            self.model = helper_funcs.load_model(body_part)
+            start_time = time.time()
 
-            self.model.compile(optimizer = self.opt, loss = 'mse')
+            for i in range(model_num):
 
-            prediction_y = self.model.predict(cur_image)
+                self.model = helper_funcs.load_model(body_part + '-' + str(i))
 
-            prediction = prediction_y[0][0]
+                self.model.compile(optimizer = self.opt, loss = 'mse')
 
-            prediction *= 100
+                prediction_y = self.model.predict(cur_image)
 
-            if prediction < 1:
-                prediction = 0.0
-            elif prediction > 100.0:
-                prediction = 100.0
+                prediction = prediction_y[0][0]
 
-            prediction = round(prediction, 1)
+                prediction *= 100
 
-            return prediction
+                if prediction < 1:
+                    prediction = 0.0
+                elif prediction > 100.0:
+                    prediction = 100.0
+
+                prediction_list.append(prediction)
+
+            mid = 1
+            if model_num > 1:
+                mid = model_num // 2
+            min_average = sorted(prediction_list)[:mid]
+
+            average_prediction = sum(prediction_list) / model_num
+            # average_prediction = sum(min_average) / model_num
+
+            end_time = time.time()
+            duration = end_time - start_time
+            print(f'Time to predict (Seconds) {duration}')
+
+            return round(average_prediction, 2)
 
     instance = None
 

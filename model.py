@@ -43,23 +43,23 @@ class Model():
         if self.current_image + 1 < len(self.image_paths):
             self.current_image += 1
 
-    def predict_abnormality(self, image_path):
+    def predict_abnormality(self, image_path, model_count):
         class_result, cur_image = self.class_trainer.predict_classification(image_path)
 
         if class_result == 0:
-            return self.regres_trainer.predict(cur_image, 'elbow')
+            return self.regres_trainer.predict(cur_image, 'elbow', model_count)
         elif class_result == 1:
-            return self.regres_trainer.predict(cur_image, 'finger')
+            return self.regres_trainer.predict(cur_image, 'finger', model_count)
         elif class_result == 2:
-            return self.regres_trainer.predict(cur_image, 'forearm')
+            return self.regres_trainer.predict(cur_image, 'forearm', model_count)
         elif class_result == 3:
-            return self.regres_trainer.predict(cur_image, 'hand')
+            return self.regres_trainer.predict(cur_image, 'hand', model_count)
         elif class_result == 4:
-            return self.regres_trainer.predict(cur_image, 'humerus')
+            return self.regres_trainer.predict(cur_image, 'humerus', model_count)
         elif class_result == 5:
-            return self.regres_trainer.predict(cur_image, 'shoulder')
+            return self.regres_trainer.predict(cur_image, 'shoulder', model_count)
         elif class_result == 6:
-            return self.regres_trainer.predict(cur_image, 'wrist')
+            return self.regres_trainer.predict(cur_image, 'wrist', model_count)
         else:
             print('Invalid class_result {}'.format(class_result))
             return None
