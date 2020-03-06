@@ -9,6 +9,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2
+from scipy import stats
 
 from datetime import datetime
 import time
@@ -243,19 +244,24 @@ class Regression_Trainer:
 
                 prediction_list.append(prediction)
 
-            mid = 1
-            if model_num > 1:
-                mid = model_num // 2
-            min_average = sorted(prediction_list)[:mid]
+                self.model = None
+                K.clear_session()
 
-            average_prediction = sum(prediction_list) / model_num
+            # mid = 1
+            # if model_num > 1:
+            #     mid = model_num // 2
+            # min_average = sorted(prediction_list)[:mid]
+
+            # average_prediction = sum(prediction_list) / model_num
             # average_prediction = sum(min_average) / model_num
 
             end_time = time.time()
             duration = end_time - start_time
             print(f'Time to predict (Seconds) {duration}')
 
-            return round(average_prediction, 2)
+            print(prediction_list)
+            prediction_list.sort()
+            return round(stats.trim_mean(prediction_list, 0.25), 2)
 
     instance = None
 
