@@ -84,22 +84,22 @@ class Controller():
             future = executor.submit(self.model.predict_abnormality, image_path, model_count)
             regress_result = future.result()
 
-        # regress_result = self.model.predict_abnormality(image_path)
+            # regress_result = self.model.predict_abnormality(image_path)
 
-        # print("Prediction is {}".format(regress_result))
+            # print("Prediction is {}".format(regress_result))
 
-        if regress_result == None:
-            return
+            if regress_result == None:
+                return
 
-        colour = None
+            colour = None
 
-        if regress_result <= 25:
-            colour = 'green'
-        elif regress_result > 25 and regress_result <= 50:
-            colour = 'yellow'
-        elif regress_result > 50 and regress_result <= 75:
-            colour = 'orange'
-        elif regress_result > 75:
-            colour = 'red'
+            if regress_result <= 25:
+                colour = 'green'
+            elif regress_result > 25 and regress_result <= 50:
+                colour = 'yellow'
+            elif regress_result > 50 and regress_result <= 75:
+                colour = 'orange'
+            elif regress_result > 75:
+                colour = 'red'
 
-        self.view.set_regression_result(regress_result, colour)
+            self.view.set_regression_result(regress_result, colour)
