@@ -2,6 +2,7 @@ import settings
 import helper_funcs
 from keras.preprocessing.image import ImageDataGenerator
 import keras.backend as K
+import tensorflow as tf
 from datetime import datetime
 from matplotlib import pyplot as plt
 
@@ -13,6 +14,7 @@ from scipy import stats
 
 from datetime import datetime
 import time
+import concurrent.futures
 
 
 class Regression_Trainer:
@@ -205,6 +207,27 @@ class Regression_Trainer:
                 plt.close()
                 history = None
 
+        def get_prediction(self, body_part, cur_image):
+            graph = tf.Graph()
+
+            with graph.as_default():
+                session = tf.compat.v1.Session(graph=graph)
+                with session.as_default():
+                    prediction_model = helper_funcs.load_model(body_part)
+                    prediction_model.compile(optimizer = self.opt, loss = 'mse')
+                    prediction_y = prediction_model.predict(cur_image)
+
+            prediction = prediction_y[0][0]
+
+            prediction *= 100
+
+            if prediction < 1:
+                prediction = 0.0
+            elif prediction > 100.0:
+                prediction = 100.0
+
+            return prediction
+
         def predict(self, cur_image, body_part, model_num):
             '''Predict the abnormality of the image_path.
 
@@ -225,27 +248,12 @@ class Regression_Trainer:
 
             start_time = time.time()
 
-            for i in range(model_num):
+            with concurrent.futures.ThreadPoolExecutor() as executor:
 
-                self.model = helper_funcs.load_model(body_part + '-' + str(i))
+                results = [executor.submit(self.get_prediction, body_part + '-' + str(i), cur_image) for i in range(model_num)]
 
-                self.model.compile(optimizer = self.opt, loss = 'mse')
-
-                prediction_y = self.model.predict(cur_image)
-
-                prediction = prediction_y[0][0]
-
-                prediction *= 100
-
-                if prediction < 1:
-                    prediction = 0.0
-                elif prediction > 100.0:
-                    prediction = 100.0
-
-                prediction_list.append(prediction)
-
-                self.model = None
-                K.clear_session()
+                for f in concurrent.futures.as_completed(results):
+                    prediction_list.append(f.result())
 
             # mid = 1
             # if model_num > 1:
