@@ -17,7 +17,7 @@ def process_image(path):
 
     # Crop into the x-ray image
     cur_image = cur_image[low_y:high_y, low_x:high_x]
-    # cv2.imshow("cropped image", cropped_img)
+    # cv2.imshow('cropped image', cropped_img)
     # cv2.waitKey()
     cv2.imwrite(path, cur_image)
 
@@ -52,7 +52,7 @@ def find_boundary(image):
     low_y = indices[0][low_y_ind]
     high_y = indices[0][high_y_ind]
 
-    # print("X: {} -> {}    Y: {} -> {}".format(low_x, high_x, low_y, high_y))
+    # print('X: {} -> {}    Y: {} -> {}'.format(low_x, high_x, low_y, high_y))
 
     return low_x, high_x, low_y, high_y
 
@@ -85,7 +85,7 @@ folder_sources =['dataset/train/elbow',
 #                 # process_image(full_file_name)
 #                 crop_image(full_file_name)
 #             except:
-#                 print("Cannot process - {}".format(full_file_name))
+#                 print('Cannot process - {}'.format(full_file_name))
 
 csv_sources =['dataset/train_elbow.csv',
             'dataset/train_finger.csv',
@@ -104,7 +104,7 @@ csv_sources =['dataset/train_elbow.csv',
 
 def remove_images():
     for source in csv_sources:
-        print("Processing... {}".format(source))
+        print(f'Processing... {source}')
         new_csv_lines = []
         with open(source, 'r') as csv_file:
             for line in csv_file:
@@ -114,7 +114,7 @@ def remove_images():
 
                 # If file does not exist
                 if not os.path.isfile(file_path):
-                    print("Removing... {}".format(file_path))
+                    print(f'Removing... {file_path}')
                     copy = False
 
                 if copy:
@@ -149,7 +149,7 @@ def balance_dataset():
         normal_count = 0
         abnormal_count = 0
         min_count = min(value)
-        print("Processing... {}".format(key))
+        print(f'Processing... {key}')
         new_csv_lines = []
         with open(key, 'r') as csv_file:
             for line in csv_file:
