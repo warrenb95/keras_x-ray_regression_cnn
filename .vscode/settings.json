@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "c:\\Users\\warre\\Documents\\GitHub\\keras_x-ray_regression_cnn\\venv\\Scripts\\python.exe"
+    "python.pythonPath": "c:\\Users\\warre\\Documents\\GitHub\\keras_x-ray_regression_cnn\\venv\\Scripts\\python.exe",
+    "workbench.preferredHighContrastColorTheme": "Default Light+",
+    "workbench.colorTheme": "Default Light+"
 }
