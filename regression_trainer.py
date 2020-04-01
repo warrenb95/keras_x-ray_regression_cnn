@@ -267,9 +267,57 @@ class Regression_Trainer:
             duration = end_time - start_time
             print(f'Time to predict (Seconds) {duration}')
 
-            print(prediction_list)
             prediction_list.sort()
-            return round(stats.trim_mean(prediction_list, 0.25), 2)
+            print(prediction_list)
+
+            below_50 = []
+            above_50 = []
+
+            for prediction in prediction_list:
+                if prediction < 50.0:
+                    below_50.append(prediction)
+                else:
+                    above_50.append(prediction)
+
+            # If 0.0 or 100.0 then return
+            if max(prediction_list) == 100.0:
+                return 100.0
+            elif min(prediction_list) == 0.0:
+                return 0.0
+            else:
+                # Otherwise use latgest list
+                if len(below_50) > len(above_50):
+                    prediction_list = below_50
+                elif len(below_50) < len(above_50):
+                    prediction_list = above_50
+                else:
+                    # Otherwise trim and use average
+                    print('below_50 and above_50 have same length')
+                    return round(stats.trim_mean(prediction_list, 0.25), 2)
+
+            group_counter = dict()
+
+            for i in range(len(prediction_list)):
+                for j in range(len(prediction_list)):
+                    if i == j:
+                        continue
+
+                    if prediction_list[j] - prediction_list[i] <= 10:
+                        if prediction_list[i] in group_counter.keys():
+                            group_counter[prediction_list[i]] += 1
+                        else:
+                            group_counter[prediction_list[i]] = 1
+
+            max_count = max(group_counter.values())
+            max_count_list = []
+            for key, val in group_counter.items():
+                if val == max_count:
+                    max_count_list.append(key)
+            
+            print(max_count_list)
+
+            return round(sum(max_count_list) / len(max_count_list), 2)
+
 
     instance = None
 
