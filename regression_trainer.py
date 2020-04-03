@@ -107,8 +107,8 @@ class Regression_Trainer:
 
             # model = helper_funcs.create_new_model(True, 0)
             for model_num in range(amount_of_models):
-                # self.model = helper_funcs.create_desnet121()
-                self.model = helper_funcs.create_new_model(True, 1)
+                self.model = helper_funcs.create_desnet121()
+                # self.model = helper_funcs.create_new_model(True, 1)
                 self.model.compile(optimizer = self.opt, loss = 'mse')
                 self.train_regression_model(body_part, model_num)
 
