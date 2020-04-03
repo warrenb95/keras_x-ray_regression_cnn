@@ -5,7 +5,7 @@ from datetime import datetime
 from keras import backend as k_back
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 if __name__ == "__main__":
     # Testing section
@@ -15,18 +15,19 @@ if __name__ == "__main__":
 
     # Uncomment to run the GUI Application
     # ---------------------------------------------------------------------
-    controller = Controller()
-    controller.run()
+    # controller = Controller()
+    # controller.run()
     # ---------------------------------------------------------------------
 
     # Uncomment to train the regression models
     # ---------------------------------------------------------------------
-    # trainer = regression_trainer.Regression_Trainer().getInstance()
+    trainer = regression_trainer.Regression_Trainer().getInstance()
     # model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
-    # amount_of_models = 9
-    # for m in model_list:
-    #     trainer.train_new(m, amount_of_models)
-    #     k_back.clear_session()
+    model_list = ['elbow']
+    amount_of_models = 1
+    for m in model_list:
+        trainer.train_new(m, amount_of_models)
+        k_back.clear_session()
     # ---------------------------------------------------------------------
 
     # Uncomment to train classification model

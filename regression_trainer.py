@@ -107,7 +107,8 @@ class Regression_Trainer:
 
             # model = helper_funcs.create_new_model(True, 0)
             for model_num in range(amount_of_models):
-                self.model = helper_funcs.create_desnet121()
+                # self.model = helper_funcs.create_desnet121()
+                self.model = helper_funcs.create_new_model(True, 1)
                 self.model.compile(optimizer = self.opt, loss = 'mse')
                 self.train_regression_model(body_part, model_num)
 
@@ -166,9 +167,9 @@ class Regression_Trainer:
                     curr_datetime = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
                     # Plot training & validation data
-                    plt.plot(history.history['loss'])
-                    plt.plot(history.history['val_loss'])
-                    plt.title('training data')
+                    plt.plot(history.history['loss'][5:])
+                    plt.plot(history.history['val_loss'][5:])
+                    plt.title( body_part + ' Training  Loss #' + str(model_num))
                     plt.ylabel('Loss')
                     plt.xlabel('Epoch')
                     plt.legend(['loss', 'val_loss'], loc='upper left')
