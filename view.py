@@ -52,8 +52,8 @@ class View():
         self.upload_btn = tk.Button(self.btn_frame, height = 2, text = "Upload Radiograph(S)", font = "10", bg = "#70db70")
         self.upload_btn.grid(row = 1, column = 0, columnspan=2, pady = 10)
 
-        self.delete_btn = tk.Button(self.btn_frame, height = 2, text = "Close Radiograph(s)", font = "10", bg = "#ff5c33")
-        self.delete_btn.grid(row = 2, column = 0, columnspan=2, pady = 10)
+        # self.delete_btn = tk.Button(self.btn_frame, height = 2, text = "Close Radiograph(s)", font = "10", bg = "#ff5c33")
+        # self.delete_btn.grid(row = 2, column = 0, columnspan=2, pady = 10)
 
         self.prev_btn = tk.Button(self.btn_frame, text = "Previous Radiograph", font = "18")
         self.prev_btn.grid(row=3, column=0, sticky=tk.E, padx = 50, pady = 10)

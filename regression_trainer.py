@@ -279,21 +279,14 @@ class Regression_Trainer:
                 else:
                     above_50.append(prediction)
 
-            # If 0.0 or 100.0 then return
-            if max(prediction_list) == 100.0:
-                return 100.0
-            elif min(prediction_list) == 0.0:
-                return 0.0
+            if len(below_50) > len(above_50):
+                prediction_list = below_50
+            elif len(below_50) < len(above_50):
+                prediction_list = above_50
             else:
-                # Otherwise use latgest list
-                if len(below_50) > len(above_50):
-                    prediction_list = below_50
-                elif len(below_50) < len(above_50):
-                    prediction_list = above_50
-                else:
-                    # Otherwise trim and use average
-                    print('below_50 and above_50 have same length')
-                    return round(stats.trim_mean(prediction_list, 0.25), 2)
+                # Otherwise trim and use average
+                print('below_50 and above_50 have same length')
+                return round(stats.trim_mean(prediction_list, 0.25), 2)
 
             group_counter = dict()
 
