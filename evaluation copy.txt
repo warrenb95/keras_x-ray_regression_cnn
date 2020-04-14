@@ -1,8 +1,7 @@
 elbow
+	Model - 0	Loss - 0.21572984918588545
 	Model - 1	Loss - 0.2342389918318609
 	Model - 2	Loss - 0.2172919702602596
-	Model - 3	Loss - 0.21572984918588545
-	Model - 4	Loss - 0.23559552830893818
 
 
 
@@ -27,4 +26,4 @@ shoulder
 	
 wrist
 	Model - 0	Loss - 0.24158371647354215
-	Model - 4	Loss - 0.23368731587482938
+	Model - 1	Loss - 0.23368731587482938

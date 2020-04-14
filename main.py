@@ -43,7 +43,7 @@ if __name__ == "__main__":
     # ---------------------------------------------------------------------
     trainer = regression_trainer.Regression_Trainer().getInstance()
     model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
-    amount_of_models = 5
+    amount_of_models = 3
     # model_list = ['elbow']
     # amount_of_models = 1
 
