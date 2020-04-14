@@ -5,7 +5,7 @@ from datetime import datetime
 from keras import backend as k_back
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 if __name__ == "__main__":
     # Testing section
