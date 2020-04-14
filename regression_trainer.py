@@ -123,7 +123,7 @@ class Regression_Trainer:
 
             return (eval_images, eval_y)
 
-        def train_new(self, body_part, amount_of_models):
+        def train_new(self, body_part, model_num):
             '''Create and train a new model for the 'body_part'.
 
             Parameters
@@ -138,10 +138,9 @@ class Regression_Trainer:
             '''
 
             # model = helper_funcs.create_new_model(True, 0)
-            for model_num in range(amount_of_models):
-                self.model = helper_funcs.create_desnet121()
-                self.model.compile(optimizer = self.opt, loss = 'mse')
-                self.train_regression_model(body_part, model_num)
+            self.model = helper_funcs.create_desnet121()
+            self.model.compile(optimizer = self.opt, loss = 'mse')
+            self.train_regression_model(body_part, model_num)
 
         def train_old(self, body_part):
             '''Load and train the 'body_part' model.
@@ -229,7 +228,7 @@ class Regression_Trainer:
                 # Plot training & validation data
                 plt.plot(history.history['loss'])
                 plt.plot(history.history['val_loss'])
-                plt.title('training data')
+                plt.title(str(body_part).capitalize  + ' Training Loss' + ' #' + str(model_num))
                 plt.ylabel('Loss')
                 plt.xlabel('Epoch')
                 plt.legend(['loss', 'val_loss'], loc='upper left')

@@ -43,28 +43,25 @@ if __name__ == "__main__":
     # ---------------------------------------------------------------------
     trainer = regression_trainer.Regression_Trainer().getInstance()
     model_list = ['elbow', 'finger', 'forearm', 'hand', 'humerus', 'shoulder', 'wrist']
-    amount_of_models = 9
+    amount_of_models = 5
     # model_list = ['elbow']
     # amount_of_models = 1
 
     evaluation_dict = {}
 
     for m in model_list:
-        evaluation_list = []
         for i in range(amount_of_models):
-            evaluation_list.append(trainer.evaluate_model(m, i))
-            k_back.clear_session()
+            loss_eval = trainer.evaluate_model(m, i)
 
-        evaluation_dict[m] = evaluation_list
+            while loss_eval >= 0.25:
+                trainer.train_new(m, i)
+                k_back.clear_session()
+                loss_eval = trainer.evaluate_model(m, i)
+
+            print(f'{str(m).capitalize} - {str(i)} Training loss <= 0.25')
 
     print(evaluation_dict)
-    with open('evaluation.txt', 'w') as eval_file:
-        for key, values in evaluation_dict.items():
-            eval_file.write(key)
-
-            for i in range(len(values)):
-                eval_file.write('\n\tModel - ' + str(i) + '\tLoss - ' + str(values[i]))
-
+    
     # ---------------------------------------------------------------------
 
     # This will turn the PC off, use when training overnight
