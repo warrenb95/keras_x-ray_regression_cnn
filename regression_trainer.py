@@ -41,6 +41,7 @@ class Regression_Trainer:
             # ---------------------------------------------------------------------
 
         def load_regression_data(self, body_part):
+            
             '''Load the regression data and images for the 'body_part'.
 
             Parameters
@@ -90,6 +91,37 @@ class Regression_Trainer:
             self.test_images_x_total = len(test_images_x)
 
             return (train_images_x, train_y, test_images_x, test_y)
+
+        def load_evaluation_data(self, body_part):
+            '''Load the regression data and images for the 'body_part'.
+
+            Parameters
+            ----------
+            body_part: str
+                The body part to load.
+
+            Returns
+            -------
+            eval_images_x: [] cv2 image
+                A list of training images.
+
+            eval_y: double
+                The target values of the train_images_x.
+            '''
+
+            valid_dataset_file = 'dataset/' + 'valid_' + body_part + '.csv'
+
+            df = helper_funcs.load_dataset_attributes(valid_dataset_file)
+
+            images = helper_funcs.load_images(df)
+
+            eval_images = np.array(images)
+
+            eval_y = df['target']
+
+            self.eval_images_x_total = len(eval_images)
+
+            return (eval_images, eval_y)
 
         def train_new(self, body_part, amount_of_models):
             '''Create and train a new model for the 'body_part'.
@@ -206,6 +238,31 @@ class Regression_Trainer:
                 plt.savefig(fname)
                 plt.close()
                 history = None
+
+        def evaluate_model(self, body_part, model_num):
+            ''' Set up and train the model for the body_part
+
+            Parameters
+            ----------
+            model: Sequential
+                A keras model to train.
+
+            body_part: str
+                The body part model.
+            '''
+
+            self.model = helper_funcs.load_model(body_part + '-' + str(model_num))
+            self.model.compile(optimizer = self.opt, loss = 'mse')
+
+            eval_images, eval_y = self.load_evaluation_data(body_part)
+
+            eval_generator = ImageDataGenerator().flow(eval_images, eval_y, batch_size = self.batch_size)
+
+            try:
+                print("----------------- Evaluating -----------------")
+                return self.model.evaluate(eval_generator, verbose = 1)
+            except:
+                print('Unabale to evaluate model ' + body_part + '-' + model_num)
 
         def get_prediction(self, body_part, cur_image):
             graph = tf.Graph()
