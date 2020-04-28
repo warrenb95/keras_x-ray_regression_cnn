@@ -1,0 +1,27 @@
+elbow
+	Model - 1	Loss - 0.2342389918318609
+	Model - 5	Loss - 0.21572984918588545
+
+finger
+	Model - 7	Loss - 0.24460978082248142
+	Model - 8	Loss - 0.2408353286595749
+	
+forearm
+	Model - 2	Loss - 0.2661327198147774
+	Model - 6	Loss - 0.298914451772968
+	
+hand
+	Model - 5	Loss - 0.2641906335547164
+	Model - 8	Loss - 0.2697142934477007
+	
+humerus
+	Model - 5	Loss - 0.23306192910032614
+	Model - 7	Loss - 0.23773849941790104
+	
+shoulder
+	Model - 1	Loss - 0.2697121700779958
+	Model - 3	Loss - 0.2574915140189908
+	
+wrist
+	Model - 4	Loss - 0.23368731587482938
+	Model - 5	Loss - 0.24158371647354215

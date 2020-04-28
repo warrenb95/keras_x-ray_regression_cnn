@@ -112,6 +112,27 @@ class Classification_Trainer:
                                     verbose = 1,
                                     shuffle = True)
 
+        def evaluate_model(self):
+            ''' 
+                Evaluate the Classification model
+
+                Returns
+                ----
+                The accuracy as float.
+            '''
+
+            self.model = helper_funcs.load_model('class')
+            self.model.compile(optimizer = self.opt, loss = 'mse')
+
+            class_generator = ImageDataGenerator().flow_from_directory(self.valid_path,
+                                                                                        target_size = (112, 112),
+                                                                                        batch_size = self.batch_size)
+            try:
+                print("----------------- Evaluating -----------------")
+                return self.model.evaluate(class_generator, verbose = 1)
+            except:
+                print('Unabale to evaluate model class model')
+        
         def predict_classification(self, image_path):
             '''Predict image classification.
 
@@ -142,7 +163,7 @@ class Classification_Trainer:
 
     instance = None
 
-    def getInstance(self):
+    def getInstance():
         if not Classification_Trainer.instance:
             Classification_Trainer.instance = Classification_Trainer.__Classification_Trainer()
 
