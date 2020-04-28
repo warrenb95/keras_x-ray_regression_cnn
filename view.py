@@ -46,22 +46,22 @@ class View():
         self.btn_frame = tk.Frame(side_frame, width = side_frame.winfo_width(), height = side_frame.winfo_height() * 0.3, bg = "grey")
         self.btn_frame.pack(fill = tk.X, padx = 10, pady = 10, side=tk.BOTTOM)
 
-        self.add_btn = tk.Button(self.btn_frame, height = 2, text = "Add Radiograph(s)", font = "10", bg = "#70db70")
+        self.add_btn = tk.Button(self.btn_frame, height = 2, text = "Add Radiograph(s)", bg = "#70db70")
         self.add_btn.grid(row = 0, column = 0, columnspan=2, pady = 10)
 
-        self.upload_btn = tk.Button(self.btn_frame, height = 2, text = "Upload Radiograph(S)", font = "10", bg = "#70db70")
+        self.upload_btn = tk.Button(self.btn_frame, height = 2, text = "Upload Radiograph(S)", bg = "#70db70")
         self.upload_btn.grid(row = 1, column = 0, columnspan=2, pady = 10)
 
         # self.delete_btn = tk.Button(self.btn_frame, height = 2, text = "Close Radiograph(s)", font = "10", bg = "#ff5c33")
         # self.delete_btn.grid(row = 2, column = 0, columnspan=2, pady = 10)
 
-        self.prev_btn = tk.Button(self.btn_frame, text = "Previous Radiograph", font = "18")
-        self.prev_btn.grid(row=3, column=0, sticky=tk.E, padx = 50, pady = 10)
+        self.prev_btn = tk.Button(self.btn_frame, text = "Previous Radiograph")
+        self.prev_btn.grid(row=3, column=0, padx = 50, pady = 10)
 
-        self.next_btn = tk.Button(self.btn_frame, text = "Next Radiograph", font = "18")
-        self.next_btn.grid(row=3, column=1, sticky=tk.W, padx = 50, pady = 10)
+        self.next_btn = tk.Button(self.btn_frame, text = "Next Radiograph")
+        self.next_btn.grid(row=3, column=1, padx = 50, pady = 10)
 
-        self.process_btn = tk.Button(self.btn_frame, text = "Process Radiograph", font = "24")
+        self.process_btn = tk.Button(self.btn_frame, text = "Process Radiograph", font = "2")
         self.process_btn.grid(row=4, column=0, columnspan=2, sticky=tk.N + tk.E + tk.S + tk.W, padx = 50, pady = 10)
 
     def set_regression_result(self, regress_result, colour):
