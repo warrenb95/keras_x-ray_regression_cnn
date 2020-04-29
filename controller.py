@@ -2,7 +2,7 @@ import tkinter as tk
 from model import Model
 from view import View
 from PIL import Image, ImageTk
-import concurrent.futures
+import threading
 
 class Controller():
     '''GUI Controller
@@ -80,26 +80,26 @@ class Controller():
 
         image_path = self.model.image_paths[self.model.current_image]
 
-        with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(self.model.predict_abnormality, image_path, model_count)
-            regress_result = future.result()
+        threading.Thread(target=self.get_prediction, args=(model_count, image_path)).start()
 
-            # regress_result = self.model.predict_abnormality(image_path)
+        
 
-            # print("Prediction is {}".format(regress_result))
+    def get_prediction(self, model_count, image_path):
 
-            if regress_result == None:
-                return
+        regress_result = self.model.predict_abnormality(image_path, model_count)
 
-            colour = None
+        if regress_result == None:
+            return
 
-            if regress_result <= 25:
-                colour = 'green'
-            elif regress_result > 25 and regress_result <= 50:
-                colour = 'yellow'
-            elif regress_result > 50 and regress_result <= 75:
-                colour = 'orange'
-            elif regress_result > 75:
-                colour = 'red'
+        colour = None
 
-            self.view.set_regression_result(regress_result, colour)
+        if regress_result <= 25:
+            colour = 'green'
+        elif regress_result > 25 and regress_result <= 50:
+            colour = 'yellow'
+        elif regress_result > 50 and regress_result <= 75:
+            colour = 'orange'
+        elif regress_result > 75:
+            colour = 'red'
+
+        self.view.set_regression_result(regress_result, colour)
