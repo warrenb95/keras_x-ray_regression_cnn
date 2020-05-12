@@ -76,7 +76,7 @@ class Controller():
         check.
         '''
 
-        model_count = 9
+        model_count = 2
 
         image_path = self.model.image_paths[self.model.current_image]
 
