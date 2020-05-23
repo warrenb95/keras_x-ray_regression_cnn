@@ -8,6 +8,8 @@ To use the project, you will need to pull the zip file or pull the project to yo
 
 The dataset is available on [this google drive](https://drive.google.com/open?id=1uayhATto7TRtJk88dsMtoyUAai3aYkw6). Please download and copy this file into project folder and then you will be able to train the machine learning models.
 
+**There are some images in the 'usr_in' folder for testing purposes**
+
 ## Usage
 To use the project, you much run it from a venv that has all of the requirements installed from the 'requirements.txt' file.
 
